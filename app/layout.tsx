@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./Providers";
+import ThemeToggle from "@/components/ThemeToggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="statifylight" className={inter.className}>
       <body>
+        <div className="absolute p-4">
+          <ThemeToggle />
+        </div>
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>

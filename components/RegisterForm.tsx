@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
 "use client";
 
@@ -70,14 +71,14 @@ const RegisterForm = () => {
 
   return (
     <div className="w-screen h-screen flex">
-      <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl">
-        image
+      <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl overflow-hidden">
+        <img src="lisa.jpg" alt="registerimage" className=" w-screen object-cover"/>
       </div>
       <div className="flex m-auto  lg:w-[30%]">
         <div className="w-[40rem]">
-          <div className="text-center">
-            <span className="text-[2rem]">Get Started With </span>
-            <span className="text-[3rem] font-bold text-primary">Statify</span>
+          <div className="text-center text-[3rem] font-extrabold">
+            <span className="">GET STARTED WITH </span>
+            <span className="text-primary">STATIFY</span>
           </div>
           <br />
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -116,8 +117,8 @@ const RegisterForm = () => {
             {error && <div className="text-red-700">{error}</div>}
 
             <Link className="text-right" href={"/login"}>
-              Already have an account?{" "}
-              <span className="text-primary">Login</span>
+              Have an account?{" "}
+              <span className="text-primary">Sign In</span>
             </Link>
           </form>
         </div>
