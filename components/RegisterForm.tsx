@@ -1,130 +1,133 @@
 /* eslint-disable @next/next/no-img-element */
-/* eslint-disable react/no-unescaped-entities */
 "use client";
-
-import { set } from "mongoose";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
-import {useRouter} from 'next/navigation'
-
-const RegisterForm = () => {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Register = () => {
   const [error, setError] = useState("");
-
-    // Next.js router
   const router = useRouter();
+  const { data: session, status: sessionStatus } = useSession();
 
-    // Handle form submission
-  const handleSubmit = async (e: {
-    target: any;
-    preventDefault: () => void;
-  }) => {
+  useEffect(() => {
+    if (sessionStatus === "authenticated") {
+      router.replace("/dashboard");
+    }
+  }, [sessionStatus, router]);
+
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    return emailRegex.test(email);
+  };
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const name = e.target[0].value;
+    console.log(name);
+    const username = e.target[1].value;
+    console.log(username);
+    const email = e.target[2].value;
+    console.log(email);
+    const password = e.target[3].value;
+    console.log(password);
 
-    // Check if all fields are filled
-    if (!name || !username || !email || !password) {
-      setError("Please fill in all fields");
+    if (!isValidEmail(email)) {
+      setError("Email is invalid");
       return;
     }
 
-    // Check if user already exists
+    if (!password || password.length < 8) {
+      setError("Password is invalid");
+      return;
+    }
+
     try {
-      const resUserExists = await fetch("api/userExists", {
+      const res = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({
+          name,
+          username,
+          email,
+          password,
+        }),
       });
-
-      const {user}= await resUserExists.json();
-
-      if (user) {
-        setError("User already exists");
-        return;
+      if (res.status === 400) {
+        setError("This email is already registered");
       }
-    
-      // Register user
-      const res = await fetch("api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name, username, email, password }),
-      });
-
-      if (res.ok) {
-        const form = e.target;
-        form.reset();
-        router.push('/login');
-      } else {
-        console.log("User registration failed");
+      if (res.status === 200) {
+        setError("");
+        router.push("/login");
       }
     } catch (error) {
-      console.log("Error occurred while registering user", error);
+      setError("Error, try again");
+      console.log(error);
     }
   };
 
+  if (sessionStatus === "loading") {
+    return <h1>Loading...</h1>;
+  }
+
   return (
-    <div className="w-screen h-screen flex">
-      <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl overflow-hidden">
-        <img src="lisa.jpg" alt="registerimage" className=" w-screen object-cover"/>
-      </div>
-      <div className="flex m-auto  lg:w-[30%]">
-        <div className="w-[40rem]">
-          <div className="text-center text-[3rem] font-extrabold">
-            <span className="">GET STARTED WITH </span>
-            <span className="text-primary">STATIFY</span>
-          </div>
-          <br />
-          <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <input
-              onChange={(e) => setName(e.target.value)}
-              type="text"
-              placeholder="Full Name"
-              className="input input-bordered w-full"
-            />
-            <input
-              onChange={(e) => setUsername(e.target.value)}
-              type="text"
-              placeholder="Username"
-              className="input input-bordered w-full"
-            />
-            <input
-              onChange={(e) => setEmail(e.target.value)}
-              type="text"
-              placeholder="Email"
-              className="input input-bordered w-full"
-            />
-            <input
-              onChange={(e) => setPassword(e.target.value)}
-              type="text"
-              placeholder="Password"
-              className="input input-bordered w-full"
-            />
-            <input
-              type="text"
-              placeholder="Confirm Password"
-              className="input input-bordered w-full"
-            />
+    sessionStatus !== "authenticated" && (
+      <div className="w-screen h-screen flex">
+        <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl overflow-hidden">
+          <img
+            src="lisa.jpg"
+            alt="registerimage"
+            className=" w-screen object-cover"
+          />
+        </div>
+        <div className="flex m-auto  lg:w-[30%]">
+          <div className="w-[40rem]">
+            <div className="text-center text-[3rem] font-extrabold">
+              <span className="">GET STARTED WITH </span>
+              <span className="text-primary">STATIFY</span>
+            </div>
             <br />
-            <button className="btn btn-primary">Reigster</button>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+              <input
+                type="text"
+                placeholder="Full Name"
+                className="input input-bordered w-full"
+              />
+              <input
+                type="text"
+                placeholder="Username"
+                className="input input-bordered w-full"
+              />
+              <input
+                type="text"
+                placeholder="Email"
+                className="input input-bordered w-full"
+              />
+              <input
+                type="text"
+                placeholder="Password"
+                className="input input-bordered w-full"
+              />
+              <input
+                type="text"
+                placeholder="Confirm Password"
+                className="input input-bordered w-full"
+              />
+              <br />
+              <button className="btn btn-primary">Reigster</button>
 
-            {error && <div className="text-red-700">{error}</div>}
+              {error && <div className="text-red-700">{error}</div>}
 
-            <Link className="text-right" href={"/login"}>
-              Have an account?{" "}
-              <span className="text-primary">Sign In</span>
-            </Link>
-          </form>
+              <Link className="text-right" href={"/login"}>
+                Have an account? <span className="text-primary">Sign In</span>
+              </Link>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 };
 
-export default RegisterForm;
+export default Register;

@@ -5,9 +5,6 @@ import React from 'react'
 const Landing = () => {
   return (
     <div className='grid'>
-      Hello
-      <Link href="/login">Login</Link>
-      <Link href="/register">Register</Link>
     </div>
   )
 }

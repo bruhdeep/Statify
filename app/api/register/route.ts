@@ -1,21 +1,33 @@
-import { connectMongoDB } from "@/lib/mongodb";
-import User from "@/models/user";
-import { NextResponse } from "next/server";
+import User from "@/models/User";
+import connect from "@/utils/db";
 import bcrypt from "bcryptjs";
+import { NextResponse } from "next/server";
 
-export async function POST(req: { json: () => PromiseLike<{ name: any; username: any; email: any; password: any; }> | { name: any; username: any; email: any; password: any; }; }) {
-  try {
-    const { name, username, email, password } = await req.json();
-    const hashedpassword = await bcrypt.hash(password, 10);
+export const POST = async (request: any) => {
+  const { name, username, email, password } = await request.json();
 
-    await connectMongoDB();
-    await User.create({ name, username, email, password: hashedpassword });
+  await connect();
 
-    return NextResponse.json(
-      { message: "User registered successfully" },
-      { status: 201 }
-    );
-  } catch (error) {
-    return NextResponse.json({ message: "An error occurred" }, { status: 500 });
+  const existingUser = await User.findOne({ email });
+
+  if (existingUser) {
+    return new NextResponse("Email is already in use", { status: 400 });
   }
-}
+
+  const hashedPassword = await bcrypt.hash(password, 5);
+  const newUser = new User({
+    name,
+    username,
+    email,
+    password: hashedPassword,
+  });
+
+  try {
+    await newUser.save();
+    return new NextResponse("user is registered", { status: 200 });
+  } catch (err: any) {
+    return new NextResponse(err, {
+      status: 500,
+    });
+  }
+};
