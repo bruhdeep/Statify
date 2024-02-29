@@ -6,7 +6,9 @@ import { Inter } from "next/font/google";
 
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/SessionProvider";
+
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from '@vercel/analytics/react';
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -29,7 +31,9 @@ export default async function RootLayout({
           <div className="">
             <Navbars />
             {children}
+            
             <SpeedInsights />
+            <Analytics />
           </div>
         </SessionProvider>
       </body>
