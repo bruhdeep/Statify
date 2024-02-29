@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
+
 import { Account, User as AuthUser } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
 import SpotifyProvider from "next-auth/providers/spotify";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";

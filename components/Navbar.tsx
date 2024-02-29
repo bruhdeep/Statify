@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const { data: session }: any = useSession();
@@ -25,10 +26,11 @@ const Navbar = () => {
               <Link href="/register">
                 <li>Register</li>
               </Link>
+              <ThemeToggle />
             </>
           ) : (
             <>
-              {session.user?.email}
+              {session.user?.passwor}
               <li>
                 <button
                   onClick={() => {

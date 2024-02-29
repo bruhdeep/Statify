@@ -19,7 +19,7 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        statifyldark: {
+        statifydark: {
           "primary": "#28e269",
           "secondary": "#35712d",
           "accent": "#55b98e",

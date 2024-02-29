@@ -1,15 +1,28 @@
 import React from "react";
+import { useState, useEffect } from "react";
 
 const ThemeToggle = () => {
+  const [isdark, setIsdark] = useState(
+    JSON.parse(localStorage.getItem("isdark") as string)
+  );
+  useEffect(() => {
+    localStorage.setItem('isdark', JSON.stringify(isdark));
+  }, [isdark]);
   return (
     <div>
       <label className="swap swap-rotate">
         {/* this hidden checkbox controls the state */}
-        <input type="checkbox" className="theme-controller" value="statifyldark" />
+        <input
+          type="checkbox"
+          className="theme-controller"
+          value="statifylight"
+          checked={!isdark}
+          onChange={() => setIsdark(!isdark)}
+        />
 
         {/* sun icon */}
         <svg
-          className="swap-on fill-current w-10 h-10"
+          className="swap-off fill-current w-10 h-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
@@ -18,7 +31,7 @@ const ThemeToggle = () => {
 
         {/* moon icon */}
         <svg
-          className="swap-off fill-current w-10 h-10"
+          className="swap-on fill-current w-10 h-10"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
         >
