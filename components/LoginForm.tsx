@@ -90,9 +90,9 @@ const Login = () => {
               </Link>
             </form>
             <button
-              className="w-full bg-black text-white py-2 rounded hover:bg-gray-800"
+              className="btn btn-primary"
               onClick={() => {
-                signIn("github");
+                signIn("spotify");
               }}
             >
               Sign In With Spotify
