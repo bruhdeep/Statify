@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Navbars from "@/components/Navbars";
 
 import "@/app/globals.css";
@@ -7,7 +6,6 @@ import { Inter } from "next/font/google";
 
 import { getServerSession } from "next-auth";
 import SessionProvider from "@/utils/SessionProvider";
-import ThemeToggle from "@/components/ThemeToggle";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,10 +17,8 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  isAuth,
 }: {
   children: React.ReactNode;
-  isAuth: boolean;
 }) {
   const session = await getServerSession();
   return (
