@@ -95,7 +95,7 @@ const Login = () => {
                 signIn("github");
               }}
             >
-              Sign In with Spotify
+              Sign In With Spotify
             </button>
           </div>
         </div>
