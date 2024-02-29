@@ -9,17 +9,12 @@ import ThemeToggle from "./ThemeToggle";
 const Navbars = () => {
   const { data: session }: any = useSession();
   return (
-    <div>
+    <div className="">
       <div className="navbar bg-base-100">
         <div className="flex-1 text-primary">
           <a href="/" className="btn btn-ghost text-xl">
             Statify
           </a>
-        </div>
-        <div className="pr-5">
-          <button className="btn btn-ghost">
-            <a href="/dashboard">Dashboard</a>
-          </button>
         </div>
         <div className="flex-none gap-2">
           <div className="form-control">

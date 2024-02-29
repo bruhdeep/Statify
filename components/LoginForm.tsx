@@ -34,7 +34,7 @@ const Login = () => {
     }
 
     if (!password || password.length < 8) {
-      setError("Password is invalid");
+      setError("Password is short.");
       return;
     }
 
@@ -58,10 +58,10 @@ const Login = () => {
 
   return (
     sessionStatus !== "authenticated" && (
-      <div className="w-screen h-screen flex">
-        <div className="flex m-auto w-96 lg:w-[30%]">
-          <div className="w-[40rem]">
-            <div className="text-center first-line:text-[3rem] font-extrabold">
+      <div className="h-screen flex">
+        <div className="flex m-auto">
+          <div className="m-auto w-[80%] lg:w-[40rem]">
+            <div className="text-center text-[3rem] font-extrabold">
               <span className="">WELCOME </span>
               <span className="text-primary">BACK</span>
             </div>
@@ -89,8 +89,9 @@ const Login = () => {
                 <span className="text-accent">Sign up</span>
               </Link>
             </form>
+            <div className="divider">OR</div>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary w-full"
               onClick={() => {
                 signIn("spotify");
               }}
@@ -100,7 +101,7 @@ const Login = () => {
           </div>
         </div>
         <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl overflow-hidden">
-          <img src="sakura.jpg" alt="login image" className="w-screen" />
+          <img src="sakura.jpg" alt="login image" className="w-screen min-h-screen" />
         </div>
       </div>
     )

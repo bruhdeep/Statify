@@ -3,10 +3,14 @@ import { useState, useEffect } from "react";
 
 const ThemeToggle = () => {
   const [isdark, setIsdark] = useState(
-    JSON.parse(localStorage.getItem("isdark") as string)
+    typeof localStorage !== "undefined"
+      ? JSON.parse(localStorage.getItem("isdark") as string)
+      : false
   );
   useEffect(() => {
-    localStorage.setItem('isdark', JSON.stringify(isdark));
+    if (typeof localStorage !== "undefined") {
+      localStorage.setItem("isdark", JSON.stringify(isdark));
+    }
   }, [isdark]);
   return (
     <div>
@@ -15,7 +19,7 @@ const ThemeToggle = () => {
         <input
           type="checkbox"
           className="theme-controller"
-          value="statifylight"
+          value="statifydark"
           checked={!isdark}
           onChange={() => setIsdark(!isdark)}
         />

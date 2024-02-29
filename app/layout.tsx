@@ -22,7 +22,7 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession();
   return (
-    <html lang="en" data-theme="statifydark">
+    <html lang="en" data-theme="statifylight">
       <body className={inter.className}>
         <SessionProvider session={session}>
           <div className="">

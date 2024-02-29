@@ -23,13 +23,9 @@ const Register = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     const name = e.target[0].value;
-    console.log(name);
     const username = e.target[1].value;
-    console.log(username);
     const email = e.target[2].value;
-    console.log(email);
     const password = e.target[3].value;
-    console.log(password);
 
     if (!isValidEmail(email)) {
       setError("Email is invalid");
@@ -37,7 +33,7 @@ const Register = () => {
     }
 
     if (!password || password.length < 8) {
-      setError("Password is invalid");
+      setError("Password is short. It should be atleast 8 characters long");
       return;
     }
 
@@ -73,7 +69,7 @@ const Register = () => {
 
   return (
     sessionStatus !== "authenticated" && (
-      <div className="w-screen h-screen flex">
+      <div className="h-screen flex">
         <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl overflow-hidden">
           <img
             src="lisa.jpg"
@@ -81,8 +77,8 @@ const Register = () => {
             className=" w-screen object-cover"
           />
         </div>
-        <div className="flex m-auto  lg:w-[30%]">
-          <div className="w-[40rem]">
+        <div className="flex m-auto">
+          <div className="m-auto w-[80%] lg:w-[40rem]">
             <div className="text-center text-[3rem] font-extrabold">
               <span className="">GET STARTED WITH </span>
               <span className="text-primary">STATIFY</span>
