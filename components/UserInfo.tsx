@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React from "react";
@@ -11,7 +10,6 @@ const UserInfo = () => {
   return (
     <div className="grid place-items-center h-screen">
       <div className="shadow-lg p-8 flex flex-col gap-2 my-6">
-        <div><img src={session?.user?.image ?? ""} alt="" /></div>
         <div>
           Name: <span className="font-bold">{session?.user?.name}</span>
         </div>
