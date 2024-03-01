@@ -46,33 +46,24 @@ export const authOptions: any = {
       if (account?.provider == "credentials") {
         return true;
       }
-      if (account?.provider == "spotify") {
-        const { name, email } = user;
+      if (account?.provider == "spotify") {z
         await connect();
         try {
-          const existingUser = await User.findOne({ email });
+          const existingUser = await User.findOne({ email: user.email });
           if (!existingUser) {
-            const res = await fetch(
-              "http://localhost:3000/api/registerspotify",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ name, email }),
-              }
-            );
+            const newUser = new User({
+              email: user.email,
+            });
 
-            if (res.ok) {
-              return true;
-            }
+            await newUser.save();
+            return true;
           }
+          return true;
         } catch (err) {
           console.log("Error saving user", err);
           return false;
         }
       }
-      return true;
     },
   },
 };
