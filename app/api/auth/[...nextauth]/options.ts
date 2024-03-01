@@ -64,7 +64,7 @@ export const authOptions: any = {
             );
 
             if (res.ok) {
-              return user;
+              return true;
             }
           }
         } catch (err) {
@@ -72,7 +72,7 @@ export const authOptions: any = {
           return false;
         }
       }
-      return user;
+      return true;
     },
   },
 };
