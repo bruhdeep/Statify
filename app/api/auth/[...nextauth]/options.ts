@@ -46,7 +46,7 @@ export const authOptions: any = {
       if (account?.provider == "credentials") {
         return true;
       }
-      if (account?.provider == "spotify") {
+      if (account?.provider == "spotify") {z
         await connect();
         try {
           const existingUser = await User.findOne({ email: user.email });
