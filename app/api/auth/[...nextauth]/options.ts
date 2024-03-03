@@ -44,7 +44,7 @@ export const authOptions: any = {
   callbacks: {
     async signIn({ user, account }: { user: AuthUser; account: Account }) {
       if (account?.provider == "credentials") {
-        return true;
+        return user;
       }
       if (account?.provider == "spotify") {
         const { name, email } = user;
@@ -53,13 +53,16 @@ export const authOptions: any = {
           const existingUser = await User.findOne({ email });
           if (!existingUser) {
             const res = await fetch(
-              "http://localhost:3000/api/registerspotify",
+              "http://localhost:3000/api/spotifyregister",
               {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, email }),
+                body: JSON.stringify({
+                  name,
+                  email,
+                }),
               }
             );
 
@@ -67,9 +70,8 @@ export const authOptions: any = {
               return user;
             }
           }
-        } catch (err) {
-          console.log("Error saving user", err);
-          return false;
+        } catch (error) {
+          console.log(error);
         }
       }
       return user;
