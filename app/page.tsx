@@ -67,7 +67,6 @@ function Home(): JSX.Element {
           <p>Display Name: {userData.display_name}</p>
           <p>Email: {userData.email}</p>
           <p>Country: {userData.country}</p>
-          <p>Followers: {userData.followers.total}</p>
           {/* Render other user details as needed */}
           <img
             src={userData.images[0].url}
