@@ -1,8 +1,14 @@
 import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
+import CredentialsProvider from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+
+import User from "@/models/User";
+import connect from "@/utils/db";
 
 const scopes = [
   "user-read-email",
+  "user-read-private",
   "user-read-currently-playing",
   "playlist-read-private",
   "playlist-read-collaborative",
@@ -49,9 +55,34 @@ export const authOptions = {
       clientSecret: process.env.SPOTIFY_SECRET,
       authorization: LOGIN_URL,
     }),
+    CredentialsProvider({
+      id: "credentials",
+      name: "Credentials",
+      credentials: {
+        username: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        await connect();
+        try {
+          const user = await User.findOne({ email: credentials.email });
+          if (user) {
+            const isPasswordCorrect = await bcrypt.compare(
+              credentials.password,
+              user.password
+            );
+            if (isPasswordCorrect) {
+              return user;
+            }
+          }
+        } catch (err) {
+          throw new Error(err);
+        }
+      },
+    }),
     // ...add more providers here
   ],
-  secret: process.env.JWY_SECRET,
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
   },

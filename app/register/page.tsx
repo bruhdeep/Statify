@@ -1,15 +1,18 @@
 import React from "react";
-import LoginForm from "@/components/LoginForm";
+import RegisterForm from "@/components/RegisterForm";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-export default async function Home() {
+
+const Register = async () => {
   const session = await getServerSession();
 
   if (session) redirect("/dashboard");
 
   return (
     <main>
-      <LoginForm />
+      <RegisterForm />
     </main>
   );
-}
+};
+
+export default Register;
