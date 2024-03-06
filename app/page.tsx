@@ -65,15 +65,6 @@ function Home(): JSX.Element {
         <div>
           <h2>User Details</h2>
           <p>Display Name: {userData.display_name}</p>
-          <p>Email: {userData.email}</p>
-          <p>Country: {userData.country}</p>
-          {/* Render other user details as needed */}
-          <img
-            src={userData.images[0].url}
-            alt="User Avatar"
-            height={userData.images[0].height}
-            width={userData.images[0].width}
-          />
         </div>
       ) : (
         <p>Loading user data...</p>
