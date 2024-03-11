@@ -7,12 +7,25 @@ import User from "@/models/User";
 import connect from "@/utils/db";
 
 const scopes = [
-  "user-read-email",
-  "user-read-private",
+  "ugc-image-upload",
+  "user-read-playback-state",
+  "user-modify-playback-state",
   "user-read-currently-playing",
+  "streaming",
+  "app-remote-control",
+  "playlist-modify-public",
+  "playlist-modify-private",
   "playlist-read-private",
   "playlist-read-collaborative",
-  "user-read-playback-state",
+  "user-follow-modify",
+  "user-follow-read",
+  "user-read-recently-played",
+  "user-top-read",
+  "user-read-playback-position",
+  "user-library-modify",
+  "user-library-read",
+  "user-read-email",
+  "user-read-private",
 ].join(",");
 
 const params = {
@@ -55,31 +68,31 @@ export const authOptions = {
       clientSecret: process.env.SPOTIFY_SECRET,
       authorization: LOGIN_URL,
     }),
-    CredentialsProvider({
-      id: "credentials",
-      name: "Credentials",
-      credentials: {
-        username: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        await connect();
-        try {
-          const user = await User.findOne({ email: credentials.email });
-          if (user) {
-            const isPasswordCorrect = await bcrypt.compare(
-              credentials.password,
-              user.password
-            );
-            if (isPasswordCorrect) {
-              return user;
-            }
-          }
-        } catch (err) {
-          throw new Error(err);
-        }
-      },
-    }),
+    // CredentialsProvider({
+    //   id: "credentials",
+    //   name: "Credentials",
+    //   credentials: {
+    //     username: { label: "Email", type: "text" },
+    //     password: { label: "Password", type: "password" },
+    //   },
+    //   async authorize(credentials) {
+    //     await connect();
+    //     try {
+    //       const user = await User.findOne({ email: credentials.email });
+    //       if (user) {
+    //         const isPasswordCorrect = await bcrypt.compare(
+    //           credentials.password,
+    //           user.password
+    //         );
+    //         if (isPasswordCorrect) {
+    //           return user;
+    //         }
+    //       }
+    //     } catch (err) {
+    //       throw new Error(err);
+    //     }
+    //   },
+    // }),
     // ...add more providers here
   ],
   secret: process.env.NEXTAUTH_SECRET,

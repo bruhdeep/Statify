@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
+import { FaUser } from "react-icons/fa";
+
 import React from "react";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
@@ -30,12 +32,18 @@ const Navbars = () => {
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src={session?.user?.image}
-                />
-              </div>
+              {session ? (
+                <div className="w-10 rounded-full">
+                  <img
+                    alt="Tailwind CSS Navbar component"
+                    src={session?.user?.image}
+                  />
+                </div>
+              ) : (
+                <div className="w-10 rounded-full">
+                  <FaUser size={40} />
+                </div>
+              )}
             </div>
             <ul
               tabIndex={0}
@@ -51,13 +59,19 @@ const Navbars = () => {
                 <a>Settings</a>
               </li>
               <li>
-                <button
-                  onClick={() => {
-                    signOut();
-                  }}
-                >
-                  Logout
-                </button>
+                {session ? (
+                  <button
+                    onClick={() => {
+                      signOut();
+                    }}
+                  >
+                    Logout
+                  </button>
+                ) : (
+                  <button>
+                    <a href="/login">Login</a>
+                  </button>
+                )}
               </li>
             </ul>
           </div>

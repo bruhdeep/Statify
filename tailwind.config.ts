@@ -20,18 +20,18 @@ const config: Config = {
     themes: [
       {
         statifydark: {
-          primary: "#28e269",
-          secondary: "#35712d",
-          accent: "#55b98e",
-          neutral: "#f6e9ea",
-          "base-100": "#000000",
+          primary: "#4446a7",
+          secondary: "#212373",
+          accent: "#1d1fa5",
+          neutral: "#f0f0f4",
+          "base-100": "#05050a",
         },
         statifylight: {
-          primary: "#1dd75e",
-          secondary: "#96d28e",
-          accent: "#46aa7f",
-          neutral: "#220d0c",
-          "base-100": "#ffffff",
+          primary: "#5759bb",
+          secondary: "#8b8cde",
+          accent: "#5c5fe2",
+          neutral: "#0a0a0e",
+          "base-100": "#f6f6fa",
         },
       },
       "dark",
