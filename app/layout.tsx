@@ -26,9 +26,9 @@ export default async function RootLayout({
     <html lang="en" data-theme="statifylight">
       <SessionProvider session={session}>
         <body className={inter.className}>
-          <div className="px-[5%]">
+          <div className="px-[3%]">
             <Navbar />
-            {children}
+            <div className="">{children}</div>
             <SpeedInsights />
             <Analytics />
           </div>

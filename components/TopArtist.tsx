@@ -5,7 +5,11 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 
-const TopArtist: React.FC = () => {
+interface TopArtistProps {
+  term: string;
+}
+
+const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
   const { data: session } = useSession();
   const [topArtist, setTopArtist] = useState<any>(null);
 
@@ -13,7 +17,7 @@ const TopArtist: React.FC = () => {
     const fetchTopArtist = async () => {
       try {
         const response = await fetch(
-          "https://api.spotify.com/v1/me/top/artists?limit=1&locale=en-US%2Cen%3Bq%3D0.5",
+          `https://api.spotify.com/v1/me/top/artists?time_range=${term}&limit=1`,
           {
             headers: {
               // Add your Spotify API token or authorization header here if needed
@@ -34,7 +38,7 @@ const TopArtist: React.FC = () => {
   }, [session]);
 
   return (
-    <div className="bg-primary">
+    <div className="bg-primary rounded-xl">
       {topArtist && (
         <div className="flex justify-between h-[100%]">
           <div className="p-10">
