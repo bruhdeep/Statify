@@ -35,7 +35,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
     };
 
     fetchTopArtist();
-  }, [session]);
+  }, [session, term]);
 
   return (
     <div className="bg-primary rounded-xl">

@@ -35,7 +35,7 @@ const TopTrack: React.FC<TopTrackProps> = ({term}) => {
     };
 
     fetchTopTrack();
-  }, [session]);
+  }, [session, term]);
 
   return (
     <div className="bg-primary rounded-xl">

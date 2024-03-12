@@ -1,8 +1,17 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import TopArtist from "@/components/TopArtist";
 import TopTrack from "@/components/TopTrack";
 
 const Dashboard = () => {
+  const [term, setTerm] = useState("short_term");
+  console.log(term);
+
+  const handleTermChange = (newTerm: string) => {
+    setTerm(newTerm);
+  };
+
   return (
     <div className="h-screen flex">
       <div className="hidden lg:block w-[50%] h-full">
@@ -15,20 +24,20 @@ const Dashboard = () => {
             <div>
               <ul className="menu menu-horizontal bg-base">
                 <li>
-                  <a>1 month</a>
+                  <a onClick={() => handleTermChange("short_term")}>1 month</a>
                 </li>
                 <li>
-                  <a>6 month</a>
+                  <a onClick={() => handleTermChange("medium_term")}>6 month</a>
                 </li>
                 <li>
-                  <a>All time</a>
+                  <a onClick={() => handleTermChange("long_term")}>All time</a>
                 </li>
               </ul>
             </div>
           </div>
-          <TopArtist term="short_term"/>
+          <TopArtist term={term} />
           <br />
-          <TopTrack term="short_term"/>
+          <TopTrack term={term} />
         </div>
         <div></div>
       </div>
