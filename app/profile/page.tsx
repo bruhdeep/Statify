@@ -58,7 +58,7 @@ function Profile(): JSX.Element {
   // Render the user data
   return (
     <div>
-      {/* {userData ? (
+      {userData ? (
         <div>
           <h2>User Details</h2>
           <p>Display Name: {userData.display_name}</p>
@@ -69,8 +69,7 @@ function Profile(): JSX.Element {
         </div>
       ) : (
         <p>Loading user data...</p>
-      )} */}
-      
+      )}
     </div>
   );
 }
