@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
-import TopArtist from "@/components/TopArtist";
-import TopTrack from "@/components/TopTrack";
+import TopArtist from "@/components/userdata/TopArtist";
+import TopTrack from "@/components/userdata/TopTrack";
+import RecentlyPlayed from "@/components/userdata/RecentlyPlayed";
 
 const Dashboard = () => {
   const [term, setTerm] = useState("short_term");
@@ -15,7 +16,9 @@ const Dashboard = () => {
   return (
     <div className="h-screen flex">
       <div className="hidden lg:block w-[50%] h-full">
-        <div></div>
+        <div>
+          <RecentlyPlayed />
+        </div>
       </div>
       <div className="w-[100%] lg:w-[50%] h-full">
         <div className="">

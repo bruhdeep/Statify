@@ -111,7 +111,7 @@ const Register = () => {
                 className="input input-bordered w-full"
               />
               <br />
-              <button className="btn btn-primary">Reigster</button>
+              <button className="btn btn-primary">Register</button>
 
               {error && <div className="text-red-700">{error}</div>}
 
