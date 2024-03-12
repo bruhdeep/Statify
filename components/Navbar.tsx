@@ -34,10 +34,7 @@ const Navbars = () => {
             >
               {session ? (
                 <div className="w-10 rounded-full">
-                  <img
-                    alt="Tailwind CSS Navbar component"
-                    src={session?.user?.image}
-                  />
+                  <img alt="Profilepic" src={session?.user?.image} />
                 </div>
               ) : (
                 <div className="w-10 rounded-full">
@@ -47,16 +44,20 @@ const Navbars = () => {
             </div>
             <ul
               tabIndex={0}
-              className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+              className=" z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
-              <li>
-                <Link href={"/profile"}>
-                  <button>Profile</button>
-                </Link>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
+              {session && (
+                <li>
+                  <Link href={"/profile"}>
+                    <button>Profile</button>
+                  </Link>
+                </li>
+              )}
+              {session && (
+                <li>
+                  <a>Settings</a>
+                </li>
+              )}
               <li>
                 {session ? (
                   <button

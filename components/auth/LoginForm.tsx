@@ -66,7 +66,10 @@ const Login = () => {
               <span className="text-primary">BACK</span>
             </div>
             <br />
-            <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+
+            {/* removed form because it no worky men */}
+
+            {/* <form onSubmit={handleSubmit} className="flex flex-col gap-3">
               <input
                 type="text"
                 placeholder="Email"
@@ -89,7 +92,8 @@ const Login = () => {
                 <span className="text-accent">Sign up</span>
               </Link>
             </form>
-            <div className="divider">OR</div>
+            <div className="divider">OR</div> */}
+
             <button
               className="btn btn-primary w-full"
               onClick={() => {
@@ -101,7 +105,11 @@ const Login = () => {
           </div>
         </div>
         <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl overflow-hidden">
-          <img src="sakura.jpg" alt="login image" className="w-screen min-h-screen" />
+          <img
+            src="sakura.jpg"
+            alt="login image"
+            className="w-screen min-h-screen"
+          />
         </div>
       </div>
     )

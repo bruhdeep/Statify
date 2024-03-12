@@ -43,7 +43,9 @@ const RecentlyPlayed: React.FC = () => {
   const getTimeAgo = (timestamp: string): string => {
     const currentTime = new Date();
     const playedTime = new Date(timestamp);
-    const difference = Math.floor((currentTime.getTime() - playedTime.getTime()) / 60000); // Convert milliseconds to minutes
+    const difference = Math.floor(
+      (currentTime.getTime() - playedTime.getTime()) / 60000
+    ); // Convert milliseconds to minutes
 
     if (difference < 1) {
       return "Just now";
@@ -61,13 +63,15 @@ const RecentlyPlayed: React.FC = () => {
   }
 
   return (
-    <div className="px-5">
-      <h2>Recently Played Tracks</h2>
-      <br />
+    <div className="">
       <ul className="">
         {recentlyPlayed.map((track: any, index: number) => (
-          <li key={index} className="flex my-3 bg-primary rounded-lg overflow-hidden">
+          <li
+            key={index}
+            className="flex my-3 bg-primary rounded-lg overflow-hidden"
+          >
             <img
+              className="p-2 rounded-xl"
               src={track.track.album.images[0].url}
               alt={track.track.name}
               style={{ width: "100px", height: "100px" }}
@@ -75,9 +79,11 @@ const RecentlyPlayed: React.FC = () => {
             <div className="p-3">
               <p>
                 {track.track.name} by{" "}
-                {track.track.artists.map(
-                  (artist: any) => artist.name
-                ).join(", ")}
+                <span className="font-bold">
+                  {track.track.artists
+                    .map((artist: any) => artist.name)
+                    .join(", ")}
+                </span>
               </p>
               <p>Played {getTimeAgo(track.played_at)}</p>
             </div>
