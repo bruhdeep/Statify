@@ -5,6 +5,8 @@ import TopArtist from "@/components/userdata/TopArtist";
 import TopTrack from "@/components/userdata/TopTrack";
 import RecentlyPlayed from "@/components/userdata/RecentlyPlayed";
 import CurrentlyPlaying from "@/components/userdata/CurrentlyPlaying";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 const Dashboard = () => {
   const [term, setTerm] = useState("short_term");
@@ -19,27 +21,8 @@ const Dashboard = () => {
         <div className="px-5">
           <div className="flex items-center justify-between">
             <p className="text-xl font-bold">Recent</p>
-
-            <div>
-              Show
-              <div className="dropdown dropdown-bottom dropdown-end">
-                <div tabIndex={0} role="button" className="btn m-1">
-                  10
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
-                >
-                  <li>
-                    <a>20</a>
-                  </li>
-                  <li>
-                    <a>50</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
           </div>
+          <br />
           <CurrentlyPlaying />
           <RecentlyPlayed />
         </div>

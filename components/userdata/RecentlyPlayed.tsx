@@ -8,12 +8,16 @@ const RecentlyPlayed: React.FC = () => {
   const { data: session } = useSession();
   const [recentlyPlayed, setRecentlyPlayed] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [limit, setLimit] = useState<number>(10); // Number of tracks to fetch
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchRecentlyPlayed = async () => {
       try {
+        setIsLoading(true);
+
         const response = await fetch(
-          "https://api.spotify.com/v1/me/player/recently-played?limit=10",
+          `https://api.spotify.com/v1/me/player/recently-played?limit=${limit}`,
           {
             headers: {
               Authorization: `Bearer ${session?.accessToken}`,
@@ -32,13 +36,15 @@ const RecentlyPlayed: React.FC = () => {
       } catch (error) {
         setError("Error fetching recently played tracks");
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     if (session?.accessToken) {
       fetchRecentlyPlayed();
     }
-  }, [session]);
+  }, [session, limit]);
 
   const getTimeAgo = (timestamp: string): string => {
     const currentTime = new Date();
@@ -56,6 +62,10 @@ const RecentlyPlayed: React.FC = () => {
     } else {
       return "More than an hour ago";
     }
+  };
+
+  const handleLoadMore = () => {
+    setLimit((prevLimit) => prevLimit + 10);
   };
 
   if (error) {
@@ -76,20 +86,35 @@ const RecentlyPlayed: React.FC = () => {
               alt={track.track.name}
               style={{ width: "100px", height: "100px" }}
             />
-            <div className="p-3">
-              <p>
-                {track.track.name} by{" "}
-                <span className="font-bold">
-                  {track.track.artists
-                    .map((artist: any) => artist.name)
-                    .join(", ")}
-                </span>
-              </p>
-              <p>Played {getTimeAgo(track.played_at)}</p>
+            <div className="p-3 flex items-center">
+              <div>
+                <p>
+                  {track.track.name} by{" "}
+                  <span className="font-bold">
+                    {track.track.artists
+                      .map((artist: any) => artist.name)
+                      .join(", ")}
+                  </span>
+                </p>
+                <p>Played {getTimeAgo(track.played_at)}</p>
+              </div>
             </div>
           </li>
         ))}
       </ul>
+      {isLoading ? (
+        <div className="flex justify-center">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          {limit < 50 && (
+            <button className="btn btn-primary" onClick={handleLoadMore}>
+              Load More
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 };

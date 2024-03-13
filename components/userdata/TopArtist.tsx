@@ -48,22 +48,13 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
               <p className="text-xl">Followers: {topArtist.followers.total}</p>
             </div>
           </div>
-          <div className="w-[40%] h-[100%] p-3">
+          <div className="w-60 h-60 p-3">
             <img
-              className="rounded-lg"
+              className="rounded-lg w-full h-full object-cover"
               src={topArtist.images[0].url}
               alt={topArtist.name}
             />
           </div>
-          {/* <h2>Top Artist</h2>
-          <div>
-            <img src={topArtist.images[0].url} alt={topArtist.name} />
-            <h3>{topArtist.name}</h3>
-            
-            <p>Genres: {topArtist.genres.join(", ")}</p>
-            <p>Popularity: {topArtist.popularity}</p>
-            <a href={topArtist.external_urls.spotify}>Open in Spotify</a>
-          </div> */}
         </div>
       )}
     </div>

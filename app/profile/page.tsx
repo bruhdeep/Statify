@@ -2,6 +2,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface SpotifyUserData {
@@ -33,6 +34,9 @@ interface SpotifyUserData {
 
 function Profile(): JSX.Element {
   const { data: session } = useSession();
+
+  if (!session) redirect("/login");
+
   // Define state variables to hold user data
   const [userData, setUserData] = useState<SpotifyUserData | null>(null);
 

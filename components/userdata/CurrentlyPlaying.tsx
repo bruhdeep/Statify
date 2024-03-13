@@ -56,25 +56,28 @@ const CurrentlyPlaying: React.FC = () => {
             alt={currentlyPlaying.name}
             style={{ width: "100px", height: "100px" }}
           />
-          <div className="p-3">
-            <p>
-              {currentlyPlaying.name} by{" "}
-              <span className="font-bold">
-                {currentlyPlaying.artists
-                  .map((artist: any) => artist.name)
-                  .join(", ")}
-              </span>
-            </p>
-            <p>Currently Playing</p>
+          <div className="p-3 flex items-center">
+            <div className="">
+              <p>
+                {currentlyPlaying.name} by{" "}
+                <span className="font-bold">
+                  {currentlyPlaying.artists
+                    .map((artist: any) => artist.name)
+                    .join(", ")}
+                </span>
+              </p>
+              <p>Currently Playing</p>
+              <span className="loading loading-dots loading-sm"></span>
+            </div>
           </div>
         </div>
       ) : (
         // Skeleton loader
-        <div className="flex flex-col gap-4 w-52">
+        <div className="flex flex-col gap-4 w-52 my-4">
           <div className="flex gap-4 items-center">
-            <div className="skeleton w-16 h-16 rounded-full shrink-0"></div>
+            <div className="skeleton w-20 h-20 shrink-0"></div>
             <div className="flex flex-col gap-4">
-              <div className="skeleton h-4 w-20"></div>
+              <div className="skeleton h-4 w-52"></div>
               <div className="skeleton h-4 w-28"></div>
             </div>
           </div>
