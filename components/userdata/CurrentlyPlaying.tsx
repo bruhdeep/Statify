@@ -32,7 +32,7 @@ const CurrentlyPlaying: React.FC = () => {
           setCurrentlyPlaying(null);
         }
       } catch (error) {
-        setError("Error fetching currently playing track");
+        setError("Not playing rn");
         console.error(error);
       }
     };
@@ -43,7 +43,7 @@ const CurrentlyPlaying: React.FC = () => {
   }, [session]);
 
   if (error) {
-    return <div>{error}</div>;
+    return <div></div>;
   }
 
   return (

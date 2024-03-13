@@ -7,6 +7,7 @@ import RecentlyPlayed from "@/components/userdata/RecentlyPlayed";
 import CurrentlyPlaying from "@/components/userdata/CurrentlyPlaying";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import UserPlaylists from "@/components/userdata/UserPlaylists";
 
 const Dashboard = () => {
   const [term, setTerm] = useState("short_term");
@@ -65,7 +66,12 @@ const Dashboard = () => {
           <br />
           <TopTrack term={term} />
         </div>
-        <div></div>
+        <br />
+        <p className="text-xl">Playlists</p>
+        <br />
+        <div>
+          <UserPlaylists />
+        </div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ interface TopTrackProps {
   term: string;
 }
 
-const TopTrack: React.FC<TopTrackProps> = ({term}) => {
+const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
   const { data: session } = useSession();
   const [topTrack, setTopTrack] = useState<any>(null);
 
@@ -43,7 +43,7 @@ const TopTrack: React.FC<TopTrackProps> = ({term}) => {
         <div className="flex justify-between h-[100%]">
           <div className="w-60 h-60 p-3">
             <img
-              className="rounded-lg"
+              className="rounded-lg w-full h-full object-cover"
               src={topTrack.album.images[0].url}
               alt={topTrack.name}
             />
