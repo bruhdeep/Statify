@@ -41,7 +41,7 @@ const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
     <div className="bg-primary rounded-xl">
       {topTrack && (
         <div className="flex justify-between h-[100%]">
-          <div className="min-w-60 h-60 p-3">
+          <div className="w-60 min-w-32 h-60 p-3">
             <img
               className="rounded-lg w-full h-[100%] object-cover"
               src={topTrack.album.images[0].url}

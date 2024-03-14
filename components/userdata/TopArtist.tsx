@@ -48,7 +48,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
               <p className="text-xl">Followers: {topArtist.followers.total}</p>
             </div>
           </div>
-          <div className="min-w-60 h-60 p-3">
+          <div className="w-60 min-w-32 h-60 p-3">
             <img
               className="rounded-lg w-full h-full object-cover"
               src={topArtist.images[0].url}
