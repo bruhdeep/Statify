@@ -65,7 +65,7 @@ const Dashboard = () => {
           <TopTrack term={term} />
         </div>
         <br />
-        <div className="lg:hidden w-full h-full">
+        <div className="lg:hidden">
           <div className="">
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Recent</p>
