@@ -88,7 +88,7 @@ const RecentlyPlayed: React.FC = () => {
             />
             <div className="p-3 flex items-center">
               <div>
-                <p>
+                <p className="whitespace-nowrap overflow-hidden block text-ellipsis">
                   {track.track.name} by{" "}
                   <span className="font-bold">
                     {track.track.artists

@@ -57,8 +57,8 @@ const CurrentlyPlaying: React.FC = () => {
             style={{ width: "100px", height: "100px" }}
           />
           <div className="p-3 flex items-center">
-            <div className="">
-              <p>
+            <div>
+              <p className="whitespace-nowrap overflow-hidden block text-ellipsis">
                 {currentlyPlaying.name} by{" "}
                 <span className="font-bold">
                   {currentlyPlaying.artists

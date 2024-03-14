@@ -61,7 +61,9 @@ const PlaylistComponent: React.FC = () => {
               alt={playlist.name}
               className="w-full h-54 object-cover mb-4 rounded-lg"
             />
-            <h3 className="text-xl font-semibold whitespace-nowrap overflow-hidden block text-ellipsis">{playlist.name}</h3>
+            <h3 className="text-xl font-semibold whitespace-nowrap overflow-hidden block text-ellipsis">
+              {playlist.name}
+            </h3>
             <p className="text-sm text-gray-400">{`${playlist.tracks.total} tracks`}</p>
             <br />
             <a href={playlist.external_urls.spotify} className="">
@@ -84,3 +86,6 @@ const PlaylistComponent: React.FC = () => {
 };
 
 export default PlaylistComponent;
+
+// limit to 1 line garna lai
+// whitespace-nowrap overflow-hidden block text-ellipsis

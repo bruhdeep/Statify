@@ -65,6 +65,16 @@ const Dashboard = () => {
           <TopTrack term={term} />
         </div>
         <br />
+        <div className="lg:hidden w-full h-full">
+          <div className="">
+            <div className="flex items-center justify-between">
+              <p className="text-xl font-bold">Recent</p>
+            </div>
+            <br />
+            <CurrentlyPlaying />
+            <RecentlyPlayed />
+          </div>
+        </div>
         <p className="text-xl">Playlists</p>
         <br />
         <div>
