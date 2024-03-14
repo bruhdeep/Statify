@@ -43,12 +43,12 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
         <div className="flex justify-between h-[100%]">
           <div className="p-10">
             <div>
-              <p className="text-5xl font-bold">{topArtist.name}</p>
+              <p className="text-3xl font-bold">{topArtist.name}</p>
               <br />
               <p className="text-xl">Followers: {topArtist.followers.total}</p>
             </div>
           </div>
-          <div className="w-60 h-60 p-3">
+          <div className="min-w-60 h-60 p-3">
             <img
               className="rounded-lg w-full h-full object-cover"
               src={topArtist.images[0].url}

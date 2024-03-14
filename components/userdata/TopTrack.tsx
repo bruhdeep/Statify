@@ -41,16 +41,16 @@ const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
     <div className="bg-primary rounded-xl">
       {topTrack && (
         <div className="flex justify-between h-[100%]">
-          <div className="w-60 h-60 p-3">
+          <div className="min-w-60 h-60 p-3">
             <img
-              className="rounded-lg w-full h-full object-cover"
+              className="rounded-lg w-full h-[100%] object-cover"
               src={topTrack.album.images[0].url}
               alt={topTrack.name}
             />
           </div>
-          <div className="p-10">
+          <div className=" p-10">
             <div className="text-right">
-              <p className="text-5xl font-bold">{topTrack.name}</p>
+              <p className="text-3xl font-bold">{topTrack.name}</p>
               <br />
               <p className="text-xl">Popularity: {topTrack.popularity}</p>
             </div>

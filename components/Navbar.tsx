@@ -114,7 +114,7 @@ const Navbars = () => {
       <div>
         {/* Display search results */}
         {searchTerm && (
-          <div>
+          <div className="absolute right-32 w-54 bg-white overflow-hidden z-10">
             <h2>Search Results</h2>
             <ul>
               {searchResults.map((track: any) => (

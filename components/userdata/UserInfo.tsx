@@ -1,37 +1,62 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React from "react";
-import { signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const UserInfo = () => {
+const UserProfileComponent: React.FC = () => {
   const { data: session } = useSession();
+  const [userData, setUserData] = useState<any>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("https://api.spotify.com/v1/me", {
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Unable to fetch user data");
+        }
+
+        const data = await response.json();
+        setUserData(data);
+      } catch (error) {
+        setError("Error fetching user data");
+        console.error(error);
+      }
+    };
+
+    if (session?.accessToken) {
+      fetchUserData();
+    }
+  }, [session]);
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="grid place-items-center h-screen">
-      <div className="shadow-lg p-8 flex flex-col gap-2 my-6">
-        {/* <div>
-          Id: <span className="font-bold">{session?.user?.id}</span>
-        </div> */}
-        <div>
-          Name: <span className="font-bold">{session?.user?.name}</span>
+    <div>
+      <h2>User Profile</h2>
+      <div className="avatar">
+        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <img src={userData.images[0]?.url} alt="Profile Picture" />
         </div>
-        <div>
-          Email: <span className="font-bold">{session?.user?.email}</span>
-        </div>
-        {session ? (
-          <button onClick={() => signOut()} className="btn btn-primary">
-            Logout
-          </button>
-        ) : (
-          <button className="btn btn-primary">
-            <Link href={"/login"}>Login</Link>
-          </button>
-        )}
       </div>
+      <p>Name: {userData.display_name}</p>
+      <p>Email: {userData.email}</p>
+      <p>Country: {userData.country}</p>
+      {/* Add more user data fields as needed */}
     </div>
   );
 };
 
-export default UserInfo;
+export default UserProfileComponent;

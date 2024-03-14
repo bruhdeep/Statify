@@ -5,8 +5,6 @@ import TopArtist from "@/components/userdata/TopArtist";
 import TopTrack from "@/components/userdata/TopTrack";
 import RecentlyPlayed from "@/components/userdata/RecentlyPlayed";
 import CurrentlyPlaying from "@/components/userdata/CurrentlyPlaying";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
 import UserPlaylists from "@/components/userdata/UserPlaylists";
 
 const Dashboard = () => {
@@ -18,7 +16,7 @@ const Dashboard = () => {
 
   return (
     <div className="h-screen lg:flex pt-5">
-      <div className="hidden lg:block w-[50%] h-full">
+      <div className="hidden lg:block w-[60%] h-full">
         <div className="px-5">
           <div className="flex items-center justify-between">
             <p className="text-xl font-bold">Recent</p>
@@ -28,7 +26,7 @@ const Dashboard = () => {
           <RecentlyPlayed />
         </div>
       </div>
-      <div className="w-[100%] lg:w-[50%] h-full">
+      <div className="w-[100%] lg:w-[40%] h-full">
         <div className="text-xl font-bold">
           <div className="flex items-center justify-between">
             <div className="">Favorites</div>
