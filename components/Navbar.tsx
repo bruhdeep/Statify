@@ -50,15 +50,37 @@ const Navbars = () => {
           </a>
         </div>
         <div className="flex-none gap-2">
-          <div className="form-control">
-            <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered w-24 md:w-auto"
-              value={searchTerm}
-              onChange={handleChange}
-            />
+          <div className="grid">
+            <div className="form-control">
+              <input
+                type="text"
+                placeholder="Search"
+                className="input input-bordered w-24 md:w-auto"
+                value={searchTerm}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="absolute pt-16 z-10 overflow-hidden">
+              {searchTerm && (
+                <div className="fixedflex items-center justify-center z-50">
+                  <div className="bg-white rounded-lg p-6">
+                    <h2 className="text-xl font-bold mb-4">Search Results</h2>
+                    <ul>
+                      {searchResults.map((track: any) => (
+                        <li className="flex flex-row" key={track.id}>
+                          {track.name} by{" "}
+                          {track.artists
+                            .map((artist: any) => artist.name)
+                            .join(", ")}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+
           <div className="dropdown dropdown-end">
             <div
               tabIndex={0}
@@ -110,22 +132,6 @@ const Navbars = () => {
           </div>
           <ThemeToggle />
         </div>
-      </div>
-      <div>
-        {/* Display search results */}
-        {searchTerm && (
-          <div className="absolute right-32 w-54 bg-white overflow-hidden z-10">
-            <h2>Search Results</h2>
-            <ul>
-              {searchResults.map((track: any) => (
-                <li key={track.id}>
-                  {track.name} by{" "}
-                  {track.artists.map((artist: any) => artist.name).join(", ")}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
       </div>
     </div>
   );

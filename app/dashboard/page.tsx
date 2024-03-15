@@ -16,6 +16,7 @@ const Dashboard = () => {
 
   return (
     <div className="h-screen lg:flex pt-5">
+      {/* hidden in sm */}
       <div className="hidden lg:block w-[60%] h-full">
         <div className="px-5">
           <div className="flex items-center justify-between">
@@ -26,6 +27,7 @@ const Dashboard = () => {
           <RecentlyPlayed />
         </div>
       </div>
+
       <div className="w-[100%] lg:w-[40%] h-full">
         <div className="text-xl font-bold">
           <div className="flex items-center justify-between">
@@ -65,6 +67,8 @@ const Dashboard = () => {
           <TopTrack term={term} />
         </div>
         <br />
+
+        {/* hidden in lg */}
         <div className="lg:hidden">
           <div className="">
             <div className="flex items-center justify-between">

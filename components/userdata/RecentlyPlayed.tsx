@@ -78,7 +78,7 @@ const RecentlyPlayed: React.FC = () => {
         {recentlyPlayed.map((track: any, index: number) => (
           <li
             key={index}
-            className="flex my-3 bg-primary rounded-lg overflow-hidden"
+            className="flex mb-3 bg-primary rounded-lg overflow-hidden"
           >
             <img
               className="p-2 rounded-xl"
@@ -86,17 +86,17 @@ const RecentlyPlayed: React.FC = () => {
               alt={track.track.name}
               style={{ width: "100px", height: "100px" }}
             />
-            <div className="p-3 flex items-center">
-              <div>
-                <p className="whitespace-nowrap overflow-hidden block text-ellipsis">
+            <div className="p-3 grid items-center justify-center">
+              <div className="grid">
+                <h3 className="whitespace-nowrap overflow-hidden block text-ellipsis">
                   {track.track.name} by{" "}
                   <span className="font-bold">
-                    {track.track.artists
-                      .map((artist: any) => artist.name)
-                      .join(", ")}
+                    {track.track.artists[0].name}
                   </span>
-                </p>
-                <p>Played {getTimeAgo(track.played_at)}</p>
+                </h3>
+                <div>
+                  <p>Played {getTimeAgo(track.played_at)}</p>
+                </div>
               </div>
             </div>
           </li>
