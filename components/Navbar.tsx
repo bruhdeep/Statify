@@ -62,16 +62,30 @@ const Navbars = () => {
             </div>
             <div className="absolute pt-16 z-10 overflow-hidden">
               {searchTerm && (
-                <div className="fixedflex items-center justify-center z-50">
+                <div className="fixed flex items-center justify-center z-50">
                   <div className="bg-white rounded-lg p-6">
                     <h2 className="text-xl font-bold mb-4">Search Results</h2>
                     <ul>
                       {searchResults.map((track: any) => (
                         <li className="flex flex-row" key={track.id}>
-                          {track.name} by{" "}
-                          {track.artists
-                            .map((artist: any) => artist.name)
-                            .join(", ")}
+                          <a
+                            href={`/track/${track.id}`}
+                            className="text-blue-600 hover:underline"
+                          >
+                            {track.name}
+                          </a>{" "}
+                          by{" "}
+                          {track.artists.map((artist: any, index: number) => (
+                            <span key={artist.id}>
+                              <a
+                                href={`/artist/${artist.id}`}
+                                className="text-blue-600 hover:underline"
+                              >
+                                {artist.name}
+                              </a>
+                              {index < track.artists.length - 1 && ", "}
+                            </span>
+                          ))}
                         </li>
                       ))}
                     </ul>
