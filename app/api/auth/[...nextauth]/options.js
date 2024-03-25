@@ -80,6 +80,8 @@ export const authOptions = {
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
         token.accessTokenExpires = account.expires_at;
+
+        token.email = email;
         return token;
       }
 
@@ -94,6 +96,7 @@ export const authOptions = {
     async session({ session, token }) {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
+      session.email = token.email;
       return session;
     },
   },

@@ -55,6 +55,8 @@ const UserProfileComponent: React.FC = () => {
       <p>Email: {userData.email}</p>
       <p>Country: {userData.country}</p>
       {/* Add more user data fields as needed */}
+
+      {/* <p>{session?.user?.email}</p> */}
     </div>
   );
 };
