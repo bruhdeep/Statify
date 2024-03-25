@@ -1,8 +1,7 @@
-import Register from "@/components/auth/RegisterForm";
 import User from "@/models/User";
 import connect from "@/utils/db";
 
-async function register(email) {
+export async function register(email) {
   try {
     //connect to mongo
     await connect();
@@ -19,5 +18,3 @@ async function register(email) {
     console.error("Error saving email to MongoDB:", error);
   }
 }
-
-export default register;
