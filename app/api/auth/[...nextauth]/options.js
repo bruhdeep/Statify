@@ -1,7 +1,6 @@
 import SpotifyProvider from "next-auth/providers/spotify";
 
-import User from "@/models/User";
-import connect from "@/utils/db";
+import register from "../../register/route";
 
 const scopes = [
   "user-read-playback-state",
@@ -56,32 +55,6 @@ export const authOptions = {
       clientSecret: process.env.SPOTIFY_SECRET,
       authorization: LOGIN_URL,
     }),
-    // CredentialsProvider({
-    //   id: "credentials",
-    //   name: "Credentials",
-    //   credentials: {
-    //     username: { label: "Email", type: "text" },
-    //     password: { label: "Password", type: "password" },
-    //   },
-    //   async authorize(credentials) {
-    //     await connect();
-    //     try {
-    //       const user = await User.findOne({ email: credentials.email });
-    //       if (user) {
-    //         const isPasswordCorrect = await bcrypt.compare(
-    //           credentials.password,
-    //           user.password
-    //         );
-    //         if (isPasswordCorrect) {
-    //           return user;
-    //         }
-    //       }
-    //     } catch (err) {
-    //       throw new Error(err);
-    //     }
-    //   },
-    // }),
-    // ...add more providers here
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
@@ -91,35 +64,17 @@ export const authOptions = {
     async jwt({ token, account }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
-        async function saveEmailToMongoDB() {
-          try {
-            const response = await fetch("https://api.spotify.com/v1/me", {
-              headers: {
-                Authorization: `Bearer ${account.access_token}`,
-              },
-            });
+        const response = await fetch("https://api.spotify.com/v1/me", {
+          headers: {
+            Authorization: `Bearer ${account.access_token}`,
+          },
+        });
 
-            const userData = await response.json();
-            const email = userData.email;
-
-            //connect to mongo
-            await connect();
-            const existingUser = await User.findOne({ email });
-            //check existing user
-            if (existingUser) {
-              console.log("Email already exists in MongoDB:", email);
-            } else {
-              const user = new User({ email });
-              await user.save();
-              console.log("Email saved to MongoDB:", email);
-            }
-          } catch (error) {
-            console.error("Error saving email to MongoDB:", error);
-          }
-        }
+        const userData = await response.json();
+        const email = userData.email;
 
         //save the email to MongoDB
-        saveEmailToMongoDB();
+        register(email);
         console.log("email: ", account);
 
         token.accessToken = account.access_token;
