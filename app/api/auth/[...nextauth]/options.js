@@ -105,8 +105,7 @@ export const authOptions = {
             //connect to mongo
             await connect();
             const existingUser = await User.findOne({ email });
-
-            //check existing
+            //check existing user
             if (existingUser) {
               console.log("Email already exists in MongoDB:", email);
             } else {
