@@ -1,6 +1,7 @@
 import SpotifyProvider from "next-auth/providers/spotify";
 
-import register from "../../register/route";
+import connect from "@/utils/db";
+import User from "@/models/User";
 
 const scopes = [
   "user-read-playback-state",
@@ -72,6 +73,24 @@ export const authOptions = {
 
         const userData = await response.json();
         const email = userData.email;
+
+        async function register(email) {
+          try {
+            //connect to mongo
+            await connect();
+            const existingUser = await User.findOne({ email });
+            //check existing user
+            if (existingUser) {
+              console.log("Email already exists in MongoDB:", email);
+            } else {
+              const user = new User({ email });
+              await user.save();
+              console.log("Email saved to MongoDB:", email);
+            }
+          } catch (error) {
+            console.error("Error saving email to MongoDB:", error);
+          }
+        }
 
         //save the email to MongoDB
         register(email);
