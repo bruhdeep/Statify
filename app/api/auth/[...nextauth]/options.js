@@ -1,7 +1,4 @@
-import NextAuth from "next-auth";
 import SpotifyProvider from "next-auth/providers/spotify";
-import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
 
 import User from "@/models/User";
 import connect from "@/utils/db";
@@ -94,6 +91,38 @@ export const authOptions = {
     async jwt({ token, account }) {
       // Persist the OAuth access_token to the token right after signin
       if (account) {
+        async function saveEmailToMongoDB() {
+          try {
+            const response = await fetch("https://api.spotify.com/v1/me", {
+              headers: {
+                Authorization: `Bearer ${account.access_token}`,
+              },
+            });
+
+            const userData = await response.json();
+            const email = userData.email;
+
+            //connect to mongo
+            await connect();
+            const existingUser = await User.findOne({ email });
+
+            //check existing
+            if (existingUser) {
+              console.log("Email already exists in MongoDB:", email);
+            } else {
+              const user = new User({ email });
+              await user.save();
+              console.log("Email saved to MongoDB:", email);
+            }
+          } catch (error) {
+            console.error("Error saving email to MongoDB:", error);
+          }
+        }
+
+        //save the email to MongoDB
+        saveEmailToMongoDB();
+        console.log("email: ", account);
+
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
         token.accessTokenExpires = account.expires_at;
@@ -108,7 +137,7 @@ export const authOptions = {
       //token has expired
       return refreshAccessToken(token);
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
       return session;
