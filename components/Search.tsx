@@ -1,15 +1,19 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
+import Link from "next/link";
+
 const Search = () => {
   const { data: session }: any = useSession();
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [users, setUsers] = useState([]);
 
-  const handleSearch = async () => {
+  const handletrackSearch = async () => {
     try {
       const response = await fetch(
         `https://api.spotify.com/v1/search?q=${encodeURIComponent(
@@ -31,29 +35,138 @@ const Search = () => {
     }
   };
 
+  const handleuserSearch = async () => {
+    try {
+      const response = await fetch(`/api/users?query=${searchTerm}`);
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data);
+      } else {
+        // Handle the case when the response is not successful
+        setUsers([]);
+        console.error("Error fetching users");
+      }
+    } catch (error) {
+      console.error(error);
+      setUsers([]);
+    }
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     // Trigger search as user types
-    handleSearch();
+    handletrackSearch();
+    handleuserSearch();
   };
   return (
     <div>
       {/* modal test */}
       <button
-        className="btn btn-link text-slate-300"
+        className="btn"
         onClick={() =>
           (
-            document.getElementById("my_modal_4") as HTMLDialogElement
+            document.getElementById("searchmodal") as HTMLDialogElement
           ).showModal()
         }
       >
-        <FaSearch size={30}/>
+        <FaSearch size={28} />
       </button>
-      <dialog id="my_modal_4" className="modal">
-        <div className="modal-box w-11/12 max-w-full h-screen overflow-x-hidden">
-          {/* content */}
-          <div className="grid">
-            <div className="form-control">
+      <dialog id="searchmodal" className="modal">
+        <div className="modal-box w-11/12 max-w-7xl h-screen">
+          <div className="form-control">
+            <input
+              type="text"
+              placeholder="Search"
+              className="input input-bordered w-24 md:w-auto"
+              value={searchTerm}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="grid gap-3 lg:flex lg:gap-0 ">
+            <div className="pt-5 z-10 overflow-hidden lg:w-[57%]">
+              {searchTerm && (
+                <div className="">
+                  <div className="rounded-lg p-6 grid gap-5">
+                    Tracks:
+                    <br />
+                    <ul className="grid gap-1">
+                      {searchResults.slice(0, 5).map((track: any) => (
+                        <li
+                          className="py-3 px-2 border border-slate-700 rounded-lg"
+                          key={track.id}
+                        >
+                          <a
+                            href={`/track/${track.id}`}
+                            className="text-primary hover:underline"
+                          >
+                            {track.name}
+                          </a>{" "}
+                          by{" "}
+                          {track.artists.map((artist: any, index: number) => (
+                            <span key={artist.id}>
+                              <a
+                                href={`/artist/${artist.id}`}
+                                className="text-primary hover:underline"
+                              >
+                                {artist.name}
+                              </a>
+                              {index < track.artists.length - 1 && ", "}
+                            </span>
+                          ))}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="pt-5 z-10 overflow-hidden lg:w-[57%]">
+              {searchTerm && (
+                <div className="">
+                  <div className="rounded-lg p-6 grid gap-5">
+                    Users:
+                    <br />
+                    <ul className="grid gap-1">
+                      {users.map(
+                        (user: {
+                          imageurl: string | undefined;
+                          _id: string;
+                          username: string;
+                        }) => (
+                          <Link href={`/users/${user._id}`} key={user._id}>
+                            <li className="py-3 px-2 border border-slate-700 rounded-lg text-primary flex gap-2">
+                              <div className="rounded-2xl overflow-hidden">
+                                <img
+                                  className="object-cover"
+                                  src={user.imageurl}
+                                  alt=""
+                                  width={30}
+                                />
+                              </div>
+                              <div>{user.username}</div>
+                            </li>{" "}
+                          </Link>
+                        )
+                      )}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+    </div>
+  );
+};
+
+export default Search;
+
+{
+  /* <div className="form-control">
               <input
                 type="text"
                 placeholder="Search"
@@ -96,18 +209,5 @@ const Search = () => {
                   </div>
                 </div>
               )}
-            </div>
-          </div>
-          <div className="modal-action">
-            <form method="dialog">
-              {/* if there is a button, it will close the modal */}
-              <button className="btn">Close</button>
-            </form>
-          </div>
-        </div>
-      </dialog>
-    </div>
-  );
-};
-
-export default Search;
+            </div> */
+}

@@ -74,8 +74,9 @@ export const authOptions = {
         const userData = await response.json();
         const email = userData.email;
         const username = userData.display_name;
+        const imageurl = userData.images[0]?.url;
 
-        async function register(email, username) {
+        async function register(email, username, imageurl) {
           try {
             // Connect to MongoDB
             await connect();
@@ -86,12 +87,13 @@ export const authOptions = {
               console.log("User already exists in MongoDB:", email);
             } else {
               // Create a new user instance with email and username
-              const user = new User({ email, username }); // Ensure username is passed correctly
+              const user = new User({ email, username, imageurl }); // Ensure username is passed correctly
               await user.save(); // Save the user to MongoDB
               console.log(
                 "Email and username saved to MongoDB:",
                 email,
-                username
+                username,
+                imageurl
               );
             }
           } catch (error) {
@@ -100,13 +102,15 @@ export const authOptions = {
         }
 
         //save the email to MongoDB
-        register(email, username);
+        register(email, username, imageurl);
 
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
         token.accessTokenExpires = account.expires_at;
 
         token.email = email;
+        token.username = username;
+        token.imageurl = imageurl;
         return token;
       }
 
@@ -122,6 +126,8 @@ export const authOptions = {
       // Send properties to the client, like an access_token from a provider.
       session.accessToken = token.accessToken;
       session.email = token.email;
+      session.name = token.username;
+      session.image = token.imageurl;
       return session;
     },
   },
