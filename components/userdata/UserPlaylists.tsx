@@ -8,10 +8,13 @@ const PlaylistComponent: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [limit, setLimit] = useState<number>(6);
   const [hasMorePlaylists, setHasMorePlaylists] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
+        setIsLoading(true);
+
         const response = await fetch(
           `https://api.spotify.com/v1/me/playlists?limit=${limit}`,
           {
@@ -35,6 +38,8 @@ const PlaylistComponent: React.FC = () => {
       } catch (error) {
         setError("Error fetching playlists");
         console.error(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -74,11 +79,19 @@ const PlaylistComponent: React.FC = () => {
           </div>
         ))}
       </div>
-      {hasMorePlaylists && (
-        <div className="flex justify-center mt-4">
-          <button className="btn btn-primary" onClick={handleLoadMore}>
-            Load More
-          </button>
+      {isLoading ? (
+        <div className="flex justify-center">
+          <span className="loading loading-spinner loading-lg"></span>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          {hasMorePlaylists && (
+            <div className="flex justify-center mt-4">
+              <button className="btn btn-primary" onClick={handleLoadMore}>
+                Load More
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
