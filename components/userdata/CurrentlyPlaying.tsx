@@ -39,6 +39,11 @@ const CurrentlyPlaying: React.FC = () => {
 
     if (session?.accessToken) {
       fetchCurrentlyPlaying();
+      const interval = setInterval(fetchCurrentlyPlaying, 1000); // Refresh every second
+
+      return () => {
+        clearInterval(interval); // Clear the interval when the component unmounts
+      };
     }
   }, [session]);
 
