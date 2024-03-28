@@ -8,8 +8,6 @@ import { useRouter } from "next/navigation";
 
 const Login = () => {
   const router = useRouter();
-  const [error, setError] = useState("");
-  // const session = useSession();
   const { data: session, status: sessionStatus } = useSession();
 
   useEffect(() => {
@@ -17,40 +15,6 @@ const Login = () => {
       router.replace("/dashboard");
     }
   }, [sessionStatus, router]);
-
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    return emailRegex.test(email);
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    const email = e.target[0].value;
-    const password = e.target[1].value;
-
-    if (!isValidEmail(email)) {
-      setError("Email is invalid");
-      return;
-    }
-
-    if (!password || password.length < 8) {
-      setError("Password is short.");
-      return;
-    }
-
-    const res = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
-
-    if (res?.error) {
-      setError("Invalid email or password");
-      if (res?.url) router.replace("/dashboard");
-    } else {
-      setError("");
-    }
-  };
 
   if (sessionStatus === "loading") {
     return <h1>Loading...</h1>;
@@ -102,6 +66,11 @@ const Login = () => {
             >
               Sign In With Spotify
             </button>
+            <div className="text-right pt-5">
+              <p>Use this account for testing</p>
+              <p>statifytesting@test.com</p>
+              <p>Testing123</p>
+            </div>
           </div>
         </div>
         <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl overflow-hidden">

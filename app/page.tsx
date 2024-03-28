@@ -12,7 +12,9 @@ const Home = async () => {
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">Hello there</h1>
-          <p className="py-6">Login or Register to get started with Statify.</p>
+          <p className="py-6">
+            Login with Spotify to get started with Statify.
+          </p>
           <Link href={"/login"}>
             <button className="btn btn-primary">Get Started</button>
           </Link>
