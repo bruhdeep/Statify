@@ -73,28 +73,34 @@ export const authOptions = {
 
         const userData = await response.json();
         const email = userData.email;
+        const username = userData.display_name;
 
-        async function register(email) {
+        async function register(email, username) {
           try {
-            //connect to mongo
+            // Connect to MongoDB
             await connect();
+
             const existingUser = await User.findOne({ email });
-            //check existing user
+
             if (existingUser) {
-              console.log("Email already exists in MongoDB:", email);
+              console.log("User already exists in MongoDB:", email);
             } else {
-              const user = new User({ email });
-              await user.save();
-              console.log("Email saved to MongoDB:", email);
+              // Create a new user instance with email and username
+              const user = new User({ email, username }); // Ensure username is passed correctly
+              await user.save(); // Save the user to MongoDB
+              console.log(
+                "Email and username saved to MongoDB:",
+                email,
+                username
+              );
             }
           } catch (error) {
-            console.error("Error saving email to MongoDB:", error);
+            console.error("Error saving email and username to MongoDB:", error);
           }
         }
 
         //save the email to MongoDB
-        register(email);
-        console.log("email: ", account);
+        register(email, username);
 
         token.accessToken = account.access_token;
         token.refreshToken = account.refresh_token;
