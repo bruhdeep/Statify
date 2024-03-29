@@ -6,27 +6,24 @@ export async function GET(request) {
     // Connect to MongoDB
     await connect();
 
-    // Get the userId from the request parameters
+    // Get the search query from the request query params
     const { searchParams } = new URL(
       request.url,
       `http://${request.headers.get("host")}`
     );
     const query = searchParams.get("query");
 
-    // Find the user by _id in MongoDB
-    const user = await User.findById(query);
+    // Perform the search in MongoDB
+    const users = await User.find({
+      $or: [
+        { username: { $regex: query, $options: "i" } },
+        { email: { $regex: query, $options: "i" } },
+        // Add more fields to search if needed
+      ],
+    });
 
-    if (!user) {
-      return new Response(JSON.stringify({ error: "User not found" }), {
-        status: 404,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-    }
-
-    // Return the user data
-    return new Response(JSON.stringify(user), {
+    // Return the search results
+    return new Response(JSON.stringify(users), {
       headers: {
         "Content-Type": "application/json",
       },

@@ -74,7 +74,7 @@ export const authOptions = {
         const userData = await response.json();
         const email = userData.email;
         const username = userData.display_name;
-        const imageurl = userData.images[0]?.url;
+        const imageurl = userData.images[0].url;
 
         async function register(email, username, imageurl) {
           try {
