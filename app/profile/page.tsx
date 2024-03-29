@@ -5,8 +5,8 @@ import TopGenre from "@/components/userdata/TopGenre";
 const page = () => {
   return (
     <div>
-      <Userinfo />
-      <TopGenre/>
+      {/* <Userinfo /> */}
+      <TopGenre />
     </div>
   );
 };

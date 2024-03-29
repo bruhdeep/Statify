@@ -1,60 +1,40 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const UserProfileComponent: React.FC = () => {
-  const { data: session } = useSession();
-  const [userData, setUserData] = useState<any>(null);
-  const [error, setError] = useState<string | null>(null);
+const UserInfo = ({ userId }: { userId: string }) => {
+  const [user, setUser] = useState<any>(null);
+  // Get the userId from the query parameters
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchUser = async () => {
       try {
-        const response = await fetch("https://api.spotify.com/v1/me", {
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Unable to fetch user data");
-        }
+        const response = await fetch(`/api/users?query=${userId}`);
 
         const data = await response.json();
-        setUserData(data);
+
+        setUser(data);
       } catch (error) {
-        setError("Error fetching user data");
-        console.error(error);
+        console.error("Error fetching user:", error);
       }
     };
 
-    if (session?.accessToken) {
-      fetchUserData();
-    }
-  }, [session]);
+    fetchUser();
+  }, [userId]);
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!userData) {
+  if (!user) {
     return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <h2>User Profile</h2>
-
-      <div className="avatar">
-        <div className="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-          <img src={session?.user?.image ?? ""} alt="Profile Picture" />
-        </div>
+      <div>
+        <h2>User Details</h2>
+        <p>Name: {user.username}</p>
+        <p>Email: {user.email}</p>
       </div>
-      <p>{session?.user?.email}</p>
     </div>
   );
 };
 
-export default UserProfileComponent;
+export default UserInfo;

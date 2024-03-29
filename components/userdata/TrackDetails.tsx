@@ -21,6 +21,7 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
         );
         const data = await response.json();
         setTrackDetails(data);
+        console.log(data);
       } catch (error) {
         console.error("Error fetching track details:", error);
       }
@@ -35,32 +36,28 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
 
   return (
     <div>
-      {trackDetails && (
+      <div>
         <div>
-          <div>
-            <h2>Track Details</h2>
-            {trackDetails && (
-              <>
-                <p>Name: {trackDetails.name}</p>
-                <p>Popularity: {trackDetails.popularity}</p>
-                <p>
-                  Artists:{" "}
-                  {trackDetails.artists &&
-                    trackDetails.artists
-                      .map((artist: { name: any }) => artist.name)
-                      .join(", ")}
-                </p>
-                <p>
-                  Album:
-                  {trackDetails.album && trackDetails.album.name}
-                </p>
-                <p>Duration: {msToMinSec(trackDetails.duration_ms)}</p>
-                <p>Genre: {trackDetails.genre}</p>
-              </>
-            )}
-          </div>
+          <h2>Track Details</h2>
+          <>
+            <p>Name: {trackDetails.name}</p>
+            <p>Popularity: {trackDetails.popularity}</p>
+            <p>
+              Artists:{" "}
+              {trackDetails.artists &&
+                trackDetails.artists
+                  .map((artist: { name: any }) => artist.name)
+                  .join(", ")}
+            </p>
+            <p>
+              Album:
+              {trackDetails.album && trackDetails.album.name}
+            </p>
+            <p>Duration: {msToMinSec(trackDetails.duration_ms)}</p>
+            <p>Genre: {trackDetails.genre}</p>
+          </>
         </div>
-      )}
+      </div>
     </div>
   );
 };

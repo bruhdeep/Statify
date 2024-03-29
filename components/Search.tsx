@@ -37,7 +37,7 @@ const Search = () => {
 
   const handleuserSearch = async () => {
     try {
-      const response = await fetch(`/api/users?query=${searchTerm}`);
+      const response = await fetch(`/api/searchusers?query=${searchTerm}`);
       if (response.ok) {
         const data = await response.json();
         setUsers(data);
@@ -133,7 +133,7 @@ const Search = () => {
                           _id: string;
                           username: string;
                         }) => (
-                          <Link href={`/users/${user._id}`} key={user._id}>
+                          <Link href={`/user/${user._id}`} key={user._id}>
                             <li className="py-3 px-2 border border-slate-700 rounded-lg text-primary flex gap-2">
                               <div className="rounded-2xl overflow-hidden">
                                 <img
