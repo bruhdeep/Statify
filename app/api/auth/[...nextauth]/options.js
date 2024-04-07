@@ -78,7 +78,7 @@ export const authOptions = {
 
         const handleSubmit = async () => {
           // Send the POST request to your API route
-          await fetch("http://localhost:3000/api/saveuserdata", {
+          await fetch(process.env.NEXTAUTH_URL + "/api/saveuserdata", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
