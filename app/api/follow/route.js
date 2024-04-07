@@ -1,4 +1,3 @@
-// pages/api/follow.js
 import connect from "@/utils/db"; // Adjust your import path as needed
 import Follow from "@/models/Follow"; // Adjust your import path as needed
 
