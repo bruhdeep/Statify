@@ -1,13 +1,9 @@
 // pages/api/recentlyPlayed.js
 
 import axios from "axios";
-import RecentlyPlayed from "@/models/RecentlyPlayed";
+import RecentlyPlayed from "@/models/Recentlyplayed";
 
-export default async function handler(req, res) {
-  if (req.method !== "GET") {
-    return res.status(405).json({ message: "Method Not Allowed" });
-  }
-
+export async function GET(req, res) {
   try {
     // Extract user email from session
     const userEmail = req.session.email;
@@ -26,12 +22,20 @@ export default async function handler(req, res) {
     // Save tracks to MongoDB
     await saveToMongoDB(data.items, userEmail);
 
-    return res
-      .status(200)
-      .json({ message: "Recently played tracks saved to MongoDB" });
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   } catch (error) {
     console.error("Error:", error);
-    return res.status(500).json({ message: "Internal Server Error" });
+    return new Response(JSON.stringify({ success: false }), {
+      status: 201,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
   }
 }
 
