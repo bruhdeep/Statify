@@ -80,20 +80,50 @@ export const authOptions = {
           try {
             // Connect to MongoDB
             await connect();
-            
+
             const existingUser = await User.findOne({ email });
 
             if (existingUser) {
               console.log("User already exists in MongoDB:", email);
+              return new Response(
+                JSON.stringify("User already exists in MongoDB"),
+                {
+                  success: false,
+                  status: 201,
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
             } else {
               // Create a new user instance with email and username
               const user = new User({ email, username, imageurl }); // Ensure username is passed correctly
-              await user.save(); 
+              await user.save();
               // Save the user to MongoDB
               console.log("Email and username saved to MongoDB");
+              return new Response(
+                JSON.stringify("Email and username saved to MongoDB"),
+                {
+                  success: true,
+                  status: 200,
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
             }
           } catch (error) {
             console.error("Error saving email and username to MongoDB:", error);
+            return new Response(
+              JSON.stringify("Error saving email and username to MongoDB"),
+              {
+                success: false,
+                status: 400,
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              }
+            );
           }
         }
 

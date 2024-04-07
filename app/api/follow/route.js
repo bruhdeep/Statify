@@ -23,7 +23,8 @@ export async function POST(request) {
       const follow = new Follow({ followerId, followeeId });
       await follow.save();
       console.log("Follow saved to MongoDB");
-      return new Response(JSON.stringify({ success: true }), {
+      return new Response(JSON.stringify("Follow saved to MongoDB"), {
+        success: true,
         status: 200,
         headers: {
           "Content-Type": "application/json",
