@@ -31,12 +31,15 @@ const UserInfo = ({ userId }: { userId: string }) => {
 
   function handleFollow() {
     // Send a POST request to your API route
-    const requestBody = JSON.stringify({ followerId: "balls", followeeId: userId });
+    const requestBody = JSON.stringify({
+      followerId: userId,
+      followeeId: session?.user?.email,
+    });
 
     fetch("/api/follow", {
       method: "POST",
       headers: {
-      "Content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: requestBody,
     });

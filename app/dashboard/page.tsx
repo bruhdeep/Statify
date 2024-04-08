@@ -11,7 +11,7 @@ export default async function Dashboard() {
       <div className="hidden lg:block w-[60%] h-full">
         <div className="px-5">
           <div className="flex items-center justify-between">
-            <p className="text-xl font-bold py-3">Recent</p>
+            <p className="text-xl font-bold py-3">Reacent</p>
           </div>
           <CurrentlyPlaying />
           <RecentlyPlayed />
@@ -22,6 +22,8 @@ export default async function Dashboard() {
         {/* hidden in lg */}
         <div className="lg:hidden">
           <div className="">
+            <TermSelect />
+            <br />
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Recent</p>
             </div>

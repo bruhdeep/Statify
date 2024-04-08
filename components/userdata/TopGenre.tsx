@@ -55,6 +55,7 @@ const SpotifyTopGenre = () => {
     <div>
       <h2>Top Genre</h2>
       {topGenre ? <p>{topGenre}</p> : <p>Loading top genre...</p>}
+      <p>{session?.accessToken}</p>
     </div>
   );
 };

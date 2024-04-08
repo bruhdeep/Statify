@@ -110,7 +110,7 @@ const RecentlyPlayed: React.FC = () => {
       ) : (
         <div className="flex justify-center">
           {limit < 50 && (
-            <button className="btn btn-primary" onClick={handleLoadMore}>
+            <button className="btn btn-primary w-full lg:w-fit" onClick={handleLoadMore}>
               Load More
             </button>
           )}

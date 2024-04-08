@@ -1,64 +1,62 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 
-function FollowForm() {
-  const [followerId, setFollowerId] = useState("");
-  const [followeeId, setFolloweeId] = useState("");
-  const [response, setResponse] = useState(null);
+function SpotifyFetchComponent() {
+  const { data: session } = useSession();
+  const [status, setStatus] = useState("idle"); // idle, loading, success, error
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const handleSubmit = async (event: { preventDefault: () => void }) => {
-    event.preventDefault(); // Prevent the form from reloading the page
+  const fetchRecentlyPlayedTracks = async () => {
+    setStatus("loading");
+    setErrorMessage("");
 
-    // Send the POST request to your API route
-    const result = await fetch("/api/follow", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ followerId, followeeId }),
-    });
+    try {
+      // Adjust the endpoint as necessary
+      const response = await fetch(`/api/saverecentlyplayed`, {
+        method: "POST", // or 'POST' if your API requires
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          accessToken: session?.accessToken,
+          userEmail: session?.user?.email,
+        }),
+      });
 
-    if (result.ok) {
-      const data = await result.json(); // Safe to parse JSON
-      setResponse(data);
-    } else {
-      console.error("Error from API", await result.text()); // Handle non-OK responses
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("success");
+        console.log("Successfully fetched and stored tracks.");
+      } else {
+        setStatus("error");
+        setErrorMessage("Failed to fetch and store tracks.");
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
     }
   };
 
   return (
     <div>
-      <h2>Follow a User</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="followerId">Follower ID:</label>
-          <input
-            type="text"
-            id="followerId"
-            value={followerId}
-            onChange={(e) => setFollowerId(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="followeeId">Followee ID:</label>
-          <input
-            type="text"
-            id="followeeId"
-            value={followeeId}
-            onChange={(e) => setFolloweeId(e.target.value)}
-          />
-        </div>
-        <button type="submit">Follow</button>
-      </form>
-      {response && (
-        <div>
-          <h3>Response</h3>
-          <pre>{JSON.stringify(response, null, 2)}</pre>
-        </div>
-      )}
+      <button
+        onClick={fetchRecentlyPlayedTracks}
+        disabled={status === "loading"}
+      >
+        Fetch Recently Played Tracks
+      </button>
+      {status === "loading" && <p>Loading...</p>}
+      {status === "success" && <p>Tracks fetched and stored successfully!</p>}
+      {status === "error" && <p>Error: {errorMessage}</p>}
     </div>
   );
 }
 
-export default FollowForm;
+export default SpotifyFetchComponent;
