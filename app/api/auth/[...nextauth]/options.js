@@ -73,9 +73,6 @@ export const authOptions = {
         const username = userData.display_name;
         const imageurl = userData.images[1].url;
 
-        //save the email to MongoDB
-        // register(email, username, imageurl);
-
         const handleSubmit = async () => {
           // Send the POST request to your API route
           await fetch(process.env.NEXTAUTH_URL + "/api/saveuserdata", {

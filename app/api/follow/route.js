@@ -10,6 +10,19 @@ export async function POST(request) {
 
     const alreadyFollowing = await Follow.findOne({ followerId, followeeId });
 
+    if (followerId === followeeId) {
+      console.log("You can't follow yourself");
+      return new Response(
+        JSON.stringify({ error: "You can't follow yourself" }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
+
     if (alreadyFollowing) {
       console.log("already follwing");
       return new Response(JSON.stringify({ success: false }), {

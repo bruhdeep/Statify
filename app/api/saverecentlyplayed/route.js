@@ -8,7 +8,7 @@ export async function POST(request) {
   const { accessToken, userEmail } = await request.json();
   try {
     const { data } = await axios.get(
-      "https://api.spotify.com/v1/me/player/recently-played",
+      "https://api.spotify.com/v1/me/player/recently-played?limit=50",
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -21,6 +21,7 @@ export async function POST(request) {
       track_name: item.track.name,
       artist_name: item.track.artists.map((artist) => artist.name), // Assuming multiple artists
       played_at: new Date(item.played_at),
+      image_url: item.track.album.images[0].url,
     }));
 
     // Save each track to MongoDB
