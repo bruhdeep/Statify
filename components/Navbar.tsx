@@ -2,15 +2,37 @@
 // components/Navbars.tsx
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { FaUser } from "react-icons/fa";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import ThemeToggle from "./ThemeToggle";
 import Search from "./Search";
+import { get } from "http";
 
 const Navbar = () => {
   const { data: session }: any = useSession();
+  const [userid, setUserid] = React.useState("");
+
+  useEffect(() => {
+    const getuserid = async () => {
+      try {
+        const response = await fetch(
+          `/api/getuserid?query=${session?.user?.email}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch user");
+        }
+        const { userid } = await response.json();
+        setUserid(userid);
+        console.log(userid);
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    getuserid();
+  }, [session?.user?.email]);
 
   return (
     <div className="">
@@ -44,7 +66,7 @@ const Navbar = () => {
           >
             {session && (
               <li>
-                <Link href={"/profile"}>
+                <Link href={`/user/${userid}`}>
                   <button>Profile</button>
                 </Link>
               </li>
@@ -71,7 +93,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-        <ThemeToggle/>
+        <ThemeToggle />
       </div>
     </div>
   );
