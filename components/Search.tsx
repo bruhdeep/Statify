@@ -62,7 +62,7 @@ const Search = () => {
     <div>
       {/* modal test */}
       <button
-        className="btn"
+        className="btn btn-ghost btn-circle"
         onClick={() =>
           (
             document.getElementById("searchmodal") as HTMLDialogElement
@@ -72,7 +72,7 @@ const Search = () => {
         <FaSearch size={28} />
       </button>
       <dialog id="searchmodal" className="modal">
-        <div className="modal-box w-11/12 max-w-7xl h-screen">
+        <div className="modal-box w-11/12 max-w-7xl h-screen bg-primary">
           <div className="form-control">
             <input
               type="text"
@@ -87,12 +87,11 @@ const Search = () => {
               {searchTerm && (
                 <div className="">
                   <div className="rounded-lg p-6 grid gap-5">
-                    Tracks:
-                    <br />
+                    <p className="font-bold">Tracks:</p>
                     <ul className="grid gap-1">
                       {searchResults.slice(0, 5).map((track: any) => (
                         <li
-                          className="py-3 px-2 border border-slate-700 rounded-lg"
+                          className="py-3 px-2 border border-slate-500 text-slate-400 bg-black rounded-lg"
                           key={track.id}
                         >
                           <a
@@ -124,8 +123,7 @@ const Search = () => {
               {searchTerm && (
                 <div className="">
                   <div className="rounded-lg p-6 grid gap-5">
-                    Users:
-                    <br />
+                    <p className="font-bold">Users:</p>
                     <ul className="grid gap-1">
                       {users.map(
                         (user: {
@@ -134,7 +132,7 @@ const Search = () => {
                           username: string;
                         }) => (
                           <Link href={`/user/${user._id}`} key={user._id}>
-                            <li className="py-3 px-2 border border-slate-700 rounded-lg text-primary flex gap-2">
+                            <li className="py-3 px-2 border border-slate-500 bg-black text-slate-400 rounded-lg flex gap-2">
                               <div className="rounded-2xl overflow-hidden">
                                 <img
                                   className="object-cover"

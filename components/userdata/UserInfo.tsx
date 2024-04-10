@@ -9,6 +9,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
   const [user, setUser] = useState<any>(null);
   const [trackdata, setTrackData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -27,12 +28,11 @@ const UserInfo = ({ userId }: { userId: string }) => {
       setError("");
       try {
         const response = await fetch(
-          `/api/fetchusersrecentlyplayed?query=${user.email}`
+          `/api/fetchusersrecentlyplayed?query=${user?.email}`
         );
 
         if (response.ok) {
           const trackdata = await response.json();
-          console.log("asdwib", trackdata);
           setTrackData(trackdata);
         } else {
           throw new Error("Unable to fetch recently played tracks");
@@ -43,14 +43,38 @@ const UserInfo = ({ userId }: { userId: string }) => {
       }
     };
 
+    const fetchIsFollowing = async () => {
+      try {
+        const response = await fetch(
+          `/api/checkfollow?followerId=${user?.email}&followeeId=${session?.user?.email}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+
+        const { isFollowing } = await response.json();
+        setIsFollowing(isFollowing);
+      } catch (error) {
+        console.error("Error fetching follow status:", error);
+        setIsFollowing(false);
+      }
+    };
+
+    fetchIsFollowing();
     fetchUser();
     fetchRecentlyPlayed();
+
     const interval = setInterval(fetchRecentlyPlayed, 10000); // Refresh every 10 seconds
 
     return () => {
       clearInterval(interval); // Clear the interval when the component unmounts
     };
   }, [userId, session, user?.email]);
+
+  const isViewingOwnProfile = () => {
+    return user?.email === session?.user?.email;
+  };
 
   const getTimeAgo = (timestamp: string): string => {
     const currentTime = new Date();
@@ -65,8 +89,11 @@ const UserInfo = ({ userId }: { userId: string }) => {
       return "1 minute ago";
     } else if (difference < 60) {
       return `${difference} minutes ago`;
+    } else if (difference < 1440) {
+      const hours = Math.floor(difference / 60);
+      return `${hours} hour${hours > 1 ? "s" : ""} ago`;
     } else {
-      return "More than an hour ago";
+      return "More than a day ago";
     }
   };
 
@@ -88,6 +115,26 @@ const UserInfo = ({ userId }: { userId: string }) => {
       },
       body: requestBody,
     });
+
+    setIsFollowing(true);
+  }
+
+  function handleUnfollow() {
+    // Send a POST request to your API route
+    const requestBody = JSON.stringify({
+      followerId: user.email,
+      followeeId: session?.user?.email,
+    });
+
+    fetch("/api/unfollow", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBody,
+    });
+
+    setIsFollowing(false);
   }
 
   function saverecentlyplayed() {
@@ -116,13 +163,24 @@ const UserInfo = ({ userId }: { userId: string }) => {
         </div>
         <div className="text-xl grid items-center gap-2">
           <p>{user.username}</p>
-
-          <button onClick={handleFollow} className="btn btn-primary">
-            Follow
-          </button>
-          <button onClick={saverecentlyplayed} className="btn btn-primary">
-            Save Recently Played Tracks
-          </button>
+          {!isViewingOwnProfile() && (
+            <div>
+              {isFollowing ? (
+                <button className="btn btn-primary" onClick={handleUnfollow}>
+                  Unfollow
+                </button>
+              ) : (
+                <button className="btn btn-primary" onClick={handleFollow}>
+                  Follow
+                </button>
+              )}
+            </div>
+          )}
+          {isViewingOwnProfile() && (
+            <button onClick={saverecentlyplayed} className="btn btn-primary">
+              Save Recently Played Tracks
+            </button>
+          )}
         </div>
       </div>
       <br />
