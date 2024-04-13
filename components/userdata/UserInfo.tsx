@@ -10,6 +10,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
   const [trackdata, setTrackData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [followers, setFollowers] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -61,11 +62,30 @@ const UserInfo = ({ userId }: { userId: string }) => {
       }
     };
 
+    const fetchFollowers = async () => {
+      try {
+        const response = await fetch(`/api/getfollowers?query=${user?.email}`);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error ${response.status}`);
+        }
+
+        const followers = await response.json();
+        if (followers) {
+          console.log("followers", followers);
+          setFollowers(followers.length);
+        }
+      } catch (error) {
+        console.error("Error fetching follow status:", error);
+      }
+    };
+
+    fetchFollowers();
     fetchIsFollowing();
     fetchUser();
     fetchRecentlyPlayed();
 
-    const interval = setInterval(fetchRecentlyPlayed, 10000); // Refresh every 10 seconds
+    const interval = setInterval(fetchRecentlyPlayed, 5000); // Refresh every 10 seconds
 
     return () => {
       clearInterval(interval); // Clear the interval when the component unmounts
@@ -153,6 +173,22 @@ const UserInfo = ({ userId }: { userId: string }) => {
     });
   }
 
+  function savetop() {
+    // Send a POST request to your API route
+    const requestBody = JSON.stringify({
+      accessToken: session?.accessToken,
+      userEmail: session?.user?.email,
+    });
+
+    fetch("/api/savetop", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBody,
+    });
+  }
+
   return (
     <div className="pt-20">
       <div className="flex gap-5">
@@ -163,6 +199,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
         </div>
         <div className="text-xl grid items-center gap-2">
           <p>{user.username}</p>
+          <p>Followers: {followers}</p>
           {!isViewingOwnProfile() && (
             <div>
               {isFollowing ? (
@@ -177,9 +214,14 @@ const UserInfo = ({ userId }: { userId: string }) => {
             </div>
           )}
           {isViewingOwnProfile() && (
-            <button onClick={saverecentlyplayed} className="btn btn-primary">
-              Save Recently Played Tracks
-            </button>
+            <div className="grid gap-5">
+              <button onClick={saverecentlyplayed} className="btn btn-primary">
+                Save Recently Played Tracks
+              </button>
+              <button onClick={savetop} className="btn btn-primary">
+                Save Top
+              </button>
+            </div>
           )}
         </div>
       </div>
