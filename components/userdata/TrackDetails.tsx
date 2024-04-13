@@ -37,11 +37,17 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
   return (
     <div>
       <div>
-        <div>
-          <h2>Track Details</h2>
-          <>
-            <p>Name: {trackDetails.name}</p>
-            <p>Popularity: {trackDetails.popularity}</p>
+        <div className="flex gap-10">
+          <div className="avatar">
+            <div className="w-56 rounded">
+              <img
+                src={trackDetails.album && trackDetails.album.images[0].url}
+                alt="Track Image"
+              />
+            </div>
+          </div>
+          <div>
+            <p className="font-bold text-3xl">{trackDetails.name}</p>
             <p>
               Artists:{" "}
               {trackDetails.artists &&
@@ -54,15 +60,17 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
               {trackDetails.album && trackDetails.album.name}
             </p>
             <p>Duration: {msToMinSec(trackDetails.duration_ms)}</p>
-            <p>Genre: {trackDetails.genre}</p>
-          </>
+            <p>
+              Genre: {trackDetails.genres && trackDetails.genres.join(", ")}
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-// Helper function to convert milliseconds to minutes and seconds
+//function to convert milliseconds to minutes and seconds
 const msToMinSec = (milliseconds: number) => {
   const totalSeconds = milliseconds / 1000;
   const minutes = Math.floor(totalSeconds / 60);
