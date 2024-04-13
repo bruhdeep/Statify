@@ -1,5 +1,5 @@
-import connect from "@/utils/db"; // Adjust your import path as needed
-import Follow from "@/models/Follow"; // Adjust your import path as needed
+import connect from "@/utils/db";
+import Follow from "@/models/Follow";
 
 export async function POST(request) {
   const { followerId, followeeId } = await request.json();
