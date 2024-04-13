@@ -8,7 +8,6 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import ThemeToggle from "./ThemeToggle";
 import Search from "./Search";
-import { get } from "http";
 
 const Navbar = () => {
   const { data: session }: any = useSession();
@@ -24,8 +23,10 @@ const Navbar = () => {
           throw new Error("Failed to fetch user");
         }
         const { userid } = await response.json();
-        setUserid(userid);
-        console.log(userid);
+        //to fix the undefined userid if rendered before session initialized
+        if (userid) {
+          setUserid(userid);
+        }
       } catch (error) {
         console.error("Error fetching user:", error);
       }
