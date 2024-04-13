@@ -1,5 +1,3 @@
-// pages/api/recentlyPlayed.js
-
 import axios from "axios";
 import RecentlyPlayed from "@/models/Recentlyplayed";
 import connect from "@/utils/db";
