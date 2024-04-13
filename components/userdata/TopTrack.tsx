@@ -15,25 +15,26 @@ const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
 
   useEffect(() => {
     const fetchTopTrack = async () => {
-      try {
-        const response = await fetch(
-          `https://api.spotify.com/v1/me/top/tracks?time_range=${term}&limit=1`,
-          {
-            headers: {
-              // Add your Spotify API token or authorization header here if needed
-              Authorization: `Bearer ${session?.accessToken}`,
-            },
+      if (session?.accessToken) {
+        try {
+          const response = await fetch(
+            `https://api.spotify.com/v1/me/top/tracks?time_range=${term}&limit=1`,
+            {
+              headers: {
+                // Add your Spotify API token or authorization header here if needed
+                Authorization: `Bearer ${session?.accessToken}`,
+              },
+            }
+          );
+          const data = await response.json();
+          if (data && data.items && data.items.length > 0) {
+            setTopTrack(data.items[0]);
           }
-        );
-        const data = await response.json();
-        if (data && data.items && data.items.length > 0) {
-          setTopTrack(data.items[0]);
+        } catch (error) {
+          console.error("Error fetching top track:", error);
         }
-      } catch (error) {
-        console.error("Error fetching top track:", error);
       }
     };
-
     fetchTopTrack();
   }, [session, term]);
 
