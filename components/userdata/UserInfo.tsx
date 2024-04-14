@@ -3,6 +3,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import TopArtistsAndTracks from "./TopArtistsAndTracks";
 
 const UserInfo = ({ userId }: { userId: string }) => {
   const { data: session } = useSession();
@@ -11,6 +12,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
   const [error, setError] = useState<string | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followers, setFollowers] = useState<any[]>([]);
+  const [topdata, setTopData] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -42,6 +44,19 @@ const UserInfo = ({ userId }: { userId: string }) => {
         setError("Error fetching recently played tracks");
         console.error(error);
       }
+    };
+
+    const fetchTop = async () => {
+      try {
+        const response = await fetch(`/api/gettop?query=${user?.email}`);
+
+        if (response.ok) {
+          const topdata = await response.json();
+          setTopData(topdata);
+        } else {
+          throw new Error("Unable to fetch recently played tracks");
+        }
+      } catch (error) {}
     };
 
     const fetchIsFollowing = async () => {
@@ -84,6 +99,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
     fetchIsFollowing();
     fetchUser();
     fetchRecentlyPlayed();
+    fetchTop();
 
     const interval = setInterval(fetchRecentlyPlayed, 5000); // Refresh every 10 seconds
 
@@ -191,39 +207,45 @@ const UserInfo = ({ userId }: { userId: string }) => {
 
   return (
     <div className="pt-20">
-      <div className="flex gap-5">
-        <div className="avatar">
-          <div className="w-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-            <img src={user.imageurl} alt="" />
+      <div className="flex gap-5 justify-between">
+        <div className="flex gap-10">
+          <div className="avatar">
+            <div className="w-48 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+              <img src={user.imageurl} alt="" />
+            </div>
+          </div>
+          <div className="text-xl grid items-center gap-2">
+            <p>{user.username}</p>
+            <p>Followers: {followers}</p>
+            {!isViewingOwnProfile() && (
+              <div>
+                {isFollowing ? (
+                  <button className="btn btn-primary" onClick={handleUnfollow}>
+                    Unfollow
+                  </button>
+                ) : (
+                  <button className="btn btn-primary" onClick={handleFollow}>
+                    Follow
+                  </button>
+                )}
+              </div>
+            )}
+            {isViewingOwnProfile() && (
+              <div className="grid gap-5">
+                <button
+                  onClick={saverecentlyplayed}
+                  className="btn btn-primary"
+                >
+                  Save Recently Played Tracks
+                </button>
+                <button onClick={savetop} className="btn btn-primary">
+                  Save Top
+                </button>
+              </div>
+            )}
           </div>
         </div>
-        <div className="text-xl grid items-center gap-2">
-          <p>{user.username}</p>
-          <p>Followers: {followers}</p>
-          {!isViewingOwnProfile() && (
-            <div>
-              {isFollowing ? (
-                <button className="btn btn-primary" onClick={handleUnfollow}>
-                  Unfollow
-                </button>
-              ) : (
-                <button className="btn btn-primary" onClick={handleFollow}>
-                  Follow
-                </button>
-              )}
-            </div>
-          )}
-          {isViewingOwnProfile() && (
-            <div className="grid gap-5">
-              <button onClick={saverecentlyplayed} className="btn btn-primary">
-                Save Recently Played Tracks
-              </button>
-              <button onClick={savetop} className="btn btn-primary">
-                Save Top
-              </button>
-            </div>
-          )}
-        </div>
+        <TopArtistsAndTracks data={topdata} />
       </div>
       <br />
       <p className="font-bold text-xl">Recently Played</p>

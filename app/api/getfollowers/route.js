@@ -15,12 +15,15 @@ export async function GET(request) {
     //use for test failure thingy in docs
     //similiar one is top thingy
     if (query === "undefined") {
-      return new Response(JSON.stringify({ error: "User not found" }), {
-        status: 404,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      return new Response(
+        JSON.stringify({ error: "session not initialized" }),
+        {
+          status: 205,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
     }
 
     const user = await Follow.find({ followerId: query });
@@ -41,7 +44,6 @@ export async function GET(request) {
       },
     });
   } catch (error) {
-    console.error(error);
     return new Response(JSON.stringify({ error: "Internal server error" }), {
       status: 500,
       headers: {
