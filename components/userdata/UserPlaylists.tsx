@@ -60,7 +60,7 @@ const PlaylistComponent: React.FC = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-black">
         {playlists.map((playlist: any) => (
           <div key={playlist.id} className="min-w-40 p-4 rounded-lg bg-primary">
             <img
@@ -71,7 +71,7 @@ const PlaylistComponent: React.FC = () => {
             <h3 className="text-xl font-semibold whitespace-nowrap overflow-hidden block text-ellipsis">
               {playlist.name}
             </h3>
-            <p className="text-sm text-gray-400">{`${playlist.tracks.total} tracks`}</p>
+            <p className="text-sm">{`${playlist.tracks.total} tracks`}</p>
             <br />
             <a href={playlist.external_urls.spotify} className="">
               <div className="flex justify-end">

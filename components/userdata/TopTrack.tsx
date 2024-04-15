@@ -39,7 +39,7 @@ const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
   }, [session, term]);
 
   return (
-    <div className="bg-primary rounded-xl">
+    <div className="bg-primary rounded-xl text-black">
       {topTrack && (
         <div className="flex justify-between h-[100%]">
           <div className="w-60 min-w-32 h-60 p-3">

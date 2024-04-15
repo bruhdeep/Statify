@@ -74,7 +74,7 @@ const RecentlyPlayed: React.FC = () => {
   }
 
   return (
-    <div className="">
+    <div className="text-black">
       <ul className="">
         {recentlyPlayed.map((track: any, index: number) => (
           <li

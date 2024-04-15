@@ -40,7 +40,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
   }, [session, term]);
 
   return (
-    <div className="bg-primary rounded-xl">
+    <div className="bg-primary rounded-xl text-black">
       {topArtist && (
         <div className="flex justify-between h-[100%]">
           <div className="p-10">

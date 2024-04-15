@@ -52,22 +52,34 @@ const TopArtistsAndTracks = ({ data }: { data: any }) => {
         </ul>
       </div>
       {term === "short_term" && (
-        <div>
-          <div className="flex justify-between gap-10">
-            <div>
+        <div className="">
+          <div className="flex justify-between gap-2 rounded-xl p-2">
+            <div className="max-w-60">
               {data.short_term_top_artists.slice(0, 1).map((artist: any) => (
-                <div key={artist._id}>
-                  <img className="h-36" src={artist.image} alt={artist.name} />
-                  <h3>{artist.name}</h3>
-                  <p>Popularity: {artist.popularity}</p>
+                <div key={artist._id} className="">
+                  <img
+                    className="h-60 rounded-lg"
+                    src={artist.image}
+                    alt={artist.name}
+                  />
+                  <h3 className="font-extrabold text-lg">{artist.name}</h3>
+                  <p className="font-semibold text-sm">
+                    Popularity: {artist.popularity}
+                  </p>
                 </div>
               ))}
             </div>
-            <div>
+            <div className="max-w-60">
               {data.short_term_top_tracks.slice(0, 1).map((track: any) => (
-                <div key={track._id}>
-                  <img className="h-36" src={track.image} alt={track.name} />
-                  <h3 className="font-extrabold text-lg">{track.name}</h3>
+                <div key={track._id} className="text-right">
+                  <img
+                    className="h-60 rounded-lg"
+                    src={track.image}
+                    alt={track.name}
+                  />
+                  <h3 className="font-extrabold text-lg whitespace-nowrap overflow-hidden block text-ellipsis">
+                    {track.name}
+                  </h3>
                   <p className="font-semibold text-sm">
                     {track.artists.join(", ")}
                   </p>
@@ -80,23 +92,36 @@ const TopArtistsAndTracks = ({ data }: { data: any }) => {
 
       {term === "medium_term" && (
         <div>
-          <div className="flex justify-between">
-            <div>
+          <div className="flex justify-between gap-2 rounded-xl p-2">
+            <div className="max-w-60">
               {data.medium_term_top_artists.slice(0, 1).map((artist: any) => (
-                <div key={artist._id}>
-                  <img className="h-24" src={artist.image} alt={artist.name} />
-                  <h3>{artist.name}</h3>
-                  <p>Popularity: {artist.popularity}</p>
+                <div key={artist._id} className="">
+                  <img
+                    className="h-60 rounded-lg"
+                    src={artist.image}
+                    alt={artist.name}
+                  />
+                  <h3 className="font-extrabold text-lg">{artist.name}</h3>
+                  <p className="font-semibold text-sm">
+                    Popularity: {artist.popularity}
+                  </p>
                 </div>
               ))}
             </div>
-            <div>
+            <div className="max-w-60">
               {data.medium_term_top_tracks.slice(0, 1).map((track: any) => (
-                <div key={track._id}>
-                  <img className="h-24" src={track.image} alt={track.name} />
-                  <h3>{track.name}</h3>
-                  <p>Artists: {track.artists.join(", ")}</p>
-                  <p>Popularity: {track.popularity}</p>
+                <div key={track._id} className="text-right">
+                  <img
+                    className="h-60 rounded-lg"
+                    src={track.image}
+                    alt={track.name}
+                  />
+                  <h3 className="font-extrabold text-lg whitespace-nowrap overflow-hidden block text-ellipsis">
+                    {track.name}
+                  </h3>
+                  <p className="font-semibold text-sm">
+                    {track.artists.join(", ")}
+                  </p>
                 </div>
               ))}
             </div>
@@ -106,23 +131,36 @@ const TopArtistsAndTracks = ({ data }: { data: any }) => {
 
       {term === "long_term" && (
         <div>
-          <div className="flex justify-between">
-            <div>
+          <div className="flex justify-between gap-2 rounded-xl p-2">
+            <div className="max-w-60">
               {data.long_term_top_artists.slice(0, 1).map((artist: any) => (
-                <div key={artist._id}>
-                  <img className="h-24" src={artist.image} alt={artist.name} />
-                  <h3>{artist.name}</h3>
-                  <p>Popularity: {artist.popularity}</p>
+                <div key={artist._id} className="">
+                  <img
+                    className="h-60 rounded-lg"
+                    src={artist.image}
+                    alt={artist.name}
+                  />
+                  <h3 className="font-extrabold text-lg">{artist.name}</h3>
+                  <p className="font-semibold text-sm">
+                    Popularity: {artist.popularity}
+                  </p>
                 </div>
               ))}
             </div>
-            <div>
+            <div className="max-w-60">
               {data.long_term_top_tracks.slice(0, 1).map((track: any) => (
-                <div key={track._id}>
-                  <img className="h-24" src={track.image} alt={track.name} />
-                  <h3>{track.name}</h3>
-                  <p>Artists: {track.artists.join(", ")}</p>
-                  <p>Popularity: {track.popularity}</p>
+                <div key={track._id} className="text-right">
+                  <img
+                    className="h-60 rounded-lg"
+                    src={track.image}
+                    alt={track.name}
+                  />
+                  <h3 className="font-extrabold text-lg whitespace-nowrap overflow-hidden block text-ellipsis">
+                    {track.name}
+                  </h3>
+                  <p className="font-semibold text-sm">
+                    {track.artists.join(", ")}
+                  </p>
                 </div>
               ))}
             </div>
