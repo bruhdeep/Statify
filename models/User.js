@@ -4,8 +4,8 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema(
   {
-    email: { type: String, required: false },
-    username: { type: String, required: false },
+    email: { type: String, required: true },
+    username: { type: String, required: true },
     imageurl: { type: String, required: false },
   },
   { timestamps: true }
