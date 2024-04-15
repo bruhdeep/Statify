@@ -6,32 +6,106 @@ export async function POST(request) {
   const { accessToken, userEmail } = await request.json();
 
   try {
-    // Fetch user's top artists and tracks
-    const [topArtistsData, topTracksData] = await Promise.all([
-      axios.get("https://api.spotify.com/v1/me/top/artists?limit=50", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }),
-      axios.get("https://api.spotify.com/v1/me/top/tracks?limit=50", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }),
+    // Fetch user's top artists and tracks for short-term, medium-term, and long-term
+    const [
+      shortTermArtistsData,
+      shortTermTracksData,
+      mediumTermArtistsData,
+      mediumTermTracksData,
+      longTermArtistsData,
+      longTermTracksData,
+    ] = await Promise.all([
+      axios.get(
+        "https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=50",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ),
+      axios.get(
+        "https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=50",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ),
+      axios.get(
+        "https://api.spotify.com/v1/me/top/artists?time_range=medium_term&limit=50",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ),
+      axios.get(
+        "https://api.spotify.com/v1/me/top/tracks?time_range=medium_term&limit=50",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ),
+      axios.get(
+        "https://api.spotify.com/v1/me/top/artists?time_range=long_term&limit=50",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ),
+      axios.get(
+        "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=50",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      ),
     ]);
 
     // Save or update top artists and tracks
     await connect();
-    const topArtistsAndTracks = await TopArtistAndTrack.findOneAndUpdate(
+
+    await TopArtistAndTrack.findOneAndUpdate(
       { user_email: userEmail },
       {
         user_email: userEmail,
-        top_artists: topArtistsData.data.items.map((artist) => ({
+        short_term_top_artists: shortTermArtistsData.data.items.map(
+          (artist) => ({
+            name: artist.name,
+            image: artist.images[0].url,
+            popularity: artist.popularity,
+          })
+        ),
+        short_term_top_tracks: shortTermTracksData.data.items.map((track) => ({
+          name: track.name,
+          image: track.album.images[0].url,
+          artists: track.artists.map((artist) => artist.name),
+          popularity: track.popularity,
+        })),
+        medium_term_top_artists: mediumTermArtistsData.data.items.map(
+          (artist) => ({
+            name: artist.name,
+            image: artist.images[0].url,
+            popularity: artist.popularity,
+          })
+        ),
+        medium_term_top_tracks: mediumTermTracksData.data.items.map(
+          (track) => ({
+            name: track.name,
+            image: track.album.images[0].url,
+            artists: track.artists.map((artist) => artist.name),
+            popularity: track.popularity,
+          })
+        ),
+        long_term_top_artists: longTermArtistsData.data.items.map((artist) => ({
           name: artist.name,
           image: artist.images[0].url,
           popularity: artist.popularity,
         })),
-        top_tracks: topTracksData.data.items.map((track) => ({
+        long_term_top_tracks: longTermTracksData.data.items.map((track) => ({
           name: track.name,
           image: track.album.images[0].url,
           artists: track.artists.map((artist) => artist.name),
