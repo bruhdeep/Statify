@@ -205,6 +205,33 @@ const UserInfo = ({ userId }: { userId: string }) => {
     });
   }
 
+  function saveplaylists() {
+    // Send a POST request to your API route
+    const requestBody = JSON.stringify({
+      accessToken: session?.accessToken,
+      userEmail: session?.user?.email,
+    });
+
+    fetch("/api/saveplaylists", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBody,
+    });
+  }
+
+  const handleSaveData = async () => {
+    try {
+      await saverecentlyplayed();
+      await savetop();
+      await saveplaylists();
+      console.log("All data saved successfully!");
+    } catch (error) {
+      console.error("Error saving data:", error);
+    }
+  };
+
   return (
     <div className="pt-20">
       <div className="flex gap-5 justify-between">
@@ -232,14 +259,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
             )}
             {isViewingOwnProfile() && (
               <div className="grid gap-5">
-                <button
-                  onClick={saverecentlyplayed}
-                  className="btn btn-primary"
-                >
-                  Save Recently Played Tracks
-                </button>
-                <button onClick={savetop} className="btn btn-primary">
-                  Save Top
+                <button onClick={handleSaveData} className="btn btn-primary">
+                  Update saved data
                 </button>
               </div>
             )}
