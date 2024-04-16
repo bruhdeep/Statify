@@ -21,7 +21,7 @@ const TopArtistsAndTracks = ({ data }: { data: any }) => {
 
   return (
     <div className="">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center">
         <div className="text-xl font-bold">Favorites</div>
         {/* menu to change the term */}
         <ul className="menu menu-horizontal font-bold">
@@ -53,7 +53,7 @@ const TopArtistsAndTracks = ({ data }: { data: any }) => {
       </div>
       {term === "short_term" && (
         <div className="">
-          <div className="flex justify-between gap-2 rounded-xl p-2">
+          <div className="flex  gap-2 rounded-xl p-2">
             <div className="max-w-60">
               {data.short_term_top_artists.slice(0, 1).map((artist: any) => (
                 <div key={artist._id} className="">

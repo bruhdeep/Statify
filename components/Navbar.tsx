@@ -40,7 +40,7 @@ const Navbar = () => {
       <div className="navbar bg-base-100">
         <div className="flex-1 text-primary">
           <a href="/" className="btn btn-ghost">
-            <img className="h-12" src="logo.png" alt="" />
+            <img className="h-12" src="logo.png" alt="Statify" />
           </a>
         </div>
         <div className="flex-none gap-2"></div>

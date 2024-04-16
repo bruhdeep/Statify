@@ -5,13 +5,16 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import TopArtistsAndTracks from "./TopArtistsAndTracks";
 
+import toast, { Toaster } from "react-hot-toast";
+import { redirect } from "next/navigation";
+
 const UserInfo = ({ userId }: { userId: string }) => {
   const { data: session } = useSession();
   const [user, setUser] = useState<any>(null);
   const [trackdata, setTrackData] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isFollowing, setIsFollowing] = useState(false);
-  const [followers, setFollowers] = useState<any[]>([]);
+  const [followers, setFollowers] = useState(0);
   const [topdata, setTopData] = useState<any[]>([]);
 
   useEffect(() => {
@@ -138,6 +141,11 @@ const UserInfo = ({ userId }: { userId: string }) => {
   }
 
   function handleFollow() {
+    if (!session?.user) {
+      toast.error("You need to be logged in to follow users.");
+      redirect("/login");
+    }
+
     // Send a POST request to your API route
     const requestBody = JSON.stringify({
       followerId: user.email,
@@ -153,6 +161,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
     });
 
     setIsFollowing(true);
+    setFollowers((prevFollowers) => (prevFollowers ? prevFollowers + 1 : 1));
+    toast.success("You followed " + user.username);
   }
 
   function handleUnfollow() {
@@ -171,6 +181,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
     });
 
     setIsFollowing(false);
+    setFollowers((prevFollowers) => (prevFollowers ? prevFollowers - 1 : 0));
+    toast.success("You unfollowed " + user.username);
   }
 
   function saverecentlyplayed() {
@@ -234,16 +246,16 @@ const UserInfo = ({ userId }: { userId: string }) => {
 
   return (
     <div className="pt-20">
-      <div className="flex gap-5 justify-between">
+      <div className="grid xl:flex gap-5 justify-between">
         <div className="flex gap-10">
           <div className="avatar">
             <div className="w-96 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
               <img src={user.imageurl} alt="" />
             </div>
           </div>
-          <div className="text-xl grid items-center gap-2">
-            <p>{user.username}</p>
-            <p>Followers: {followers}</p>
+          <div className="text-xl">
+            <p className="text-5xl">{user.username}</p>
+            <p className="text-2xl">Followers: {followers}</p>
             {!isViewingOwnProfile() && (
               <div>
                 {isFollowing ? (
@@ -272,7 +284,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
       <p className="font-bold text-xl">Recently Played</p>
       <br />
       <div>
-        <ul className="">
+        <ul className="text-black">
           <p>{error}</p>
           {trackdata.map((track: any, index: number) => (
             <li

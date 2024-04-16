@@ -4,7 +4,14 @@ import CurrentlyPlaying from "@/components/userdata/CurrentlyPlaying";
 import UserPlaylists from "@/components/userdata/UserPlaylists";
 import TermSelect from "@/components/TermSelect";
 
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+
 export default async function Dashboard() {
+  const session = await getServerSession();
+
+  if (!session) redirect("/");
+
   return (
     <div className="h-screen lg:flex pt-5">
       {/* hidden in sm */}
