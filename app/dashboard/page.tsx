@@ -29,7 +29,6 @@ export default async function Dashboard() {
         {/* hidden in lg */}
         <div className="lg:hidden">
           <div className="">
-            <TermSelect />
             <br />
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Recent</p>
