@@ -72,15 +72,17 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
                         <div className="artist-image flex items-center gap-2">
                           {index + 1}
                           <img
-                            className="w-20 rounded-lg"
+                            className="min-w-20 max-w-20 rounded-lg"
                             src={artist.images[0].url}
                             alt={artist.name}
                           />
                         </div>
-                        <div className="artist-info pl-3">
+                        <div className="artist-info pl-3 whitespace-nowrap overflow-hidden block text-ellipsis">
                           <h3>{artist.name}</h3>
                           <p>Followers: {artist.followers.total}</p>
-                          <p>Genres: {artist.genres.join(", ")}</p>
+                          <p className="">
+                            Genres: {artist.genres.join(", ")}
+                          </p>
                         </div>
                       </div>
                     ))}

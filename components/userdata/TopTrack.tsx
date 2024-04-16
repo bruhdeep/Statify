@@ -72,12 +72,12 @@ const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
                         <div className="track-image flex items-center gap-2">
                           {index + 1}
                           <img
-                            className="w-20 rounded-lg"
+                            className="min-w-20 max-w-20 rounded-lg"
                             src={track.album.images[0].url}
                             alt={track.name}
                           />
                         </div>
-                        <div className="track-info pl-3">
+                        <div className="track-info pl-3 whitespace-nowrap overflow-hidden block text-ellipsis">
                           <h3>{track.name}</h3>
                           <p>
                             {track.artists
