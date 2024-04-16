@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import TopArtistsAndTracks from "./TopArtistsAndTracks";
 
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
 const UserInfo = ({ userId }: { userId: string }) => {
@@ -16,6 +16,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
   const [isFollowing, setIsFollowing] = useState(false);
   const [followers, setFollowers] = useState(0);
   const [topdata, setTopData] = useState<any[]>([]);
+  const [newUsername, setNewUsername] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -233,6 +234,23 @@ const UserInfo = ({ userId }: { userId: string }) => {
     });
   }
 
+  function changeUsername() {
+    // Send a POST request to your API route
+    const requestBody = JSON.stringify({
+      username: newUsername,
+    });
+
+    fetch(`/api/editusername?userId=${userId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: requestBody,
+    });
+    toast.success("Username changed to " + newUsername);
+    setUser({ ...user, username: newUsername });
+  }
+
   const handleSaveData = async () => {
     try {
       await saverecentlyplayed();
@@ -242,6 +260,11 @@ const UserInfo = ({ userId }: { userId: string }) => {
     } catch (error) {
       console.error("Error saving data:", error);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewUsername(e.target.value);
+    console.log(newUsername);
   };
 
   return (
@@ -276,6 +299,36 @@ const UserInfo = ({ userId }: { userId: string }) => {
                 </button>
               </div>
             )}
+            <br />
+            <div>
+              {/* Open the modal using document.getElementById('ID').showModal() method */}
+              <button
+                className="btn btn-primary"
+                onClick={() =>
+                  (
+                    document.getElementById("edituser") as HTMLDialogElement
+                  ).showModal()
+                }
+              >
+                Edit Username
+              </button>
+              <dialog id="edituser" className="modal">
+                <div className="modal-box flex justify-between">
+                  <input
+                    placeholder={user.username}
+                    onChange={handleChange}
+                    type="text"
+                    className="input input-bordered w-full max-w-xs"
+                  />
+                  <button onClick={changeUsername} className="btn btn-primary">
+                    Confirm
+                  </button>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+                </form>
+              </dialog>
+            </div>
           </div>
         </div>
         <TopArtistsAndTracks data={topdata} />

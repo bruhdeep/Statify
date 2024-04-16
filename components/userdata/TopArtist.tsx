@@ -94,7 +94,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
               </dialog>
             </div>
           </div>
-          <div className="w-60 min-w-32 h-60 p-3">
+          <div className="w-60 min-w-32 p-3">
             <img
               className="rounded-lg w-full h-full object-cover"
               src={topArtist.images[0].url}

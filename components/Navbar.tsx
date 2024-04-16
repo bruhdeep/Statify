@@ -72,11 +72,11 @@ const Navbar = () => {
                 </Link>
               </li>
             )}
-            {session && (
+            {/* {session?.user?.email === process.env.ADMIN_EMAIL && (
               <li>
-                <a>Settings</a>
+                <a>Admin</a>
               </li>
-            )}
+            )} */}
             <li>
               {session ? (
                 <button

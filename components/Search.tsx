@@ -77,7 +77,7 @@ const Search = () => {
             <input
               type="text"
               placeholder="Search"
-              className="input input-bordered w-auto"
+              className="input input-bordered md:w-auto"
               value={searchTerm}
               onChange={handleChange}
             />
