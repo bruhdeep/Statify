@@ -41,5 +41,16 @@ const config: Config = {
       "dim",
     ],
   },
+  function({ addUtilities }: { addUtilities: any }) {
+    const newUtilities = {
+      ".no-scrollbar::-webkit-scrollbar": {
+        display: "none",
+      },
+      ".no-scrollbar": {
+        "-ms-overflow-style": "none",
+        "scrollbar-width": "none",
+      },
+    };
+  },
 };
 export default config;

@@ -12,13 +12,14 @@ interface TopArtistProps {
 const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
   const { data: session } = useSession();
   const [topArtist, setTopArtist] = useState<any>(null);
+  const [topArtists, setTopArtists] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchTopArtist = async () => {
       if (session?.accessToken) {
         try {
           const response = await fetch(
-            `https://api.spotify.com/v1/me/top/artists?time_range=${term}&limit=1`,
+            `https://api.spotify.com/v1/me/top/artists?time_range=${term}`,
             {
               headers: {
                 // Add your Spotify API token or authorization header here if needed
@@ -29,6 +30,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
           const data = await response.json();
           if (data && data.items && data.items.length > 0) {
             setTopArtist(data.items[0]);
+            setTopArtists(data.items);
           }
         } catch (error) {
           console.error("Error fetching top artist:", error);
@@ -48,6 +50,46 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
               <p className="text-3xl font-bold">{topArtist.name}</p>
               <br />
               <p className="text-xl">Followers: {topArtist.followers.total}</p>
+              <br />
+              <button
+                className="btn"
+                onClick={() =>
+                  (
+                    document.getElementById("artist") as HTMLDialogElement
+                  ).showModal()
+                }
+              >
+                View more
+              </button>
+              <dialog id="artist" className="modal">
+                <div className="modal-box w-11/12 max-w-7xl h-screen bg-primary">
+                  <div className="top-artists">
+                    {topArtists.map((artist, index) => (
+                      <div
+                        key={artist.id}
+                        className="artist-card flex text-left py-2"
+                      >
+                        <div className="artist-image flex items-center gap-2">
+                          {index + 1}
+                          <img
+                            className="w-20 rounded-lg"
+                            src={artist.images[0].url}
+                            alt={artist.name}
+                          />
+                        </div>
+                        <div className="artist-info pl-3">
+                          <h3>{artist.name}</h3>
+                          <p>Followers: {artist.followers.total}</p>
+                          <p>Genres: {artist.genres.join(", ")}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+                </form>
+              </dialog>
             </div>
           </div>
           <div className="w-60 min-w-32 h-60 p-3">

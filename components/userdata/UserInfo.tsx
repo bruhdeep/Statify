@@ -247,7 +247,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
   return (
     <div className="pt-20">
       <div className="grid xl:flex gap-5 justify-between">
-        <div className="flex gap-10">
+        <div className="grid lg:flex gap-10">
           <div className="avatar">
             <div className="w-96 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
               <img src={user.imageurl} alt="" />
