@@ -71,7 +71,7 @@ const ManageUsers = () => {
               <dialog id="edituser" className="modal">
                 <div className="modal-box flex justify-between">
                   <input
-                    placeholder={user.username}
+                    placeholder=""
                     onChange={handleChange}
                     type="text"
                     className="input input-bordered w-full max-w-xs"
