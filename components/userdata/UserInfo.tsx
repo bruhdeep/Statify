@@ -300,7 +300,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
               </div>
             )}
             <br />
-            <div>
+            {isViewingOwnProfile() && (
+              <div>
               {/* Open the modal using document.getElementById('ID').showModal() method */}
               <button
                 className="btn btn-primary"
@@ -329,6 +330,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
                 </form>
               </dialog>
             </div>
+            )} 
           </div>
         </div>
         <TopArtistsAndTracks data={topdata} />
