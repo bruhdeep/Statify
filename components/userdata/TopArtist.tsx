@@ -72,7 +72,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
   }
 
   return (
-    <div className="bg-primary rounded-xl text-black">
+    <div className="bg-primary rounded-xl">
       {topArtist && (
         <div className="flex justify-between h-[100%]">
           <div className="p-10">
@@ -82,7 +82,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
               <p className="text-xl">Followers: {topArtist.followers.total}</p>
               <br />
               <button
-                className="btn"
+                className="btn btn-secondary"
                 onClick={() =>
                   (
                     document.getElementById("artist") as HTMLDialogElement
@@ -92,7 +92,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
                 View more
               </button>
               <dialog id="artist" className="modal">
-                <div className="modal-box w-11/12 max-w-7xl h-screen bg-primary">
+                <div className="modal-box w-11/12 max-w-7xl h-screen bg-primary ">
                   <div className="top-artists">
                     {topArtists.map((artist, index) => (
                       <div
@@ -131,9 +131,9 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
           </div>
         </div>
       )}
-      <div>
+      {/* <div>
         {topgenres.join(", ")}
-      </div>
+      </div> */}
     </div>
   );
 };

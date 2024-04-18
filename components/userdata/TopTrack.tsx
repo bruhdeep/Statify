@@ -38,7 +38,7 @@ const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
   }, [session, term]);
 
   return (
-    <div className="bg-primary rounded-xl text-black">
+    <div className="bg-primary rounded-xl">
       {topTrack && (
         <div className="flex justify-between h-[100%]">
           <div className="w-60 min-w-32 p-3">
@@ -55,7 +55,7 @@ const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
               <p className="text-xl">Popularity: {topTrack.popularity}</p>
               <br />
               <button
-                className="btn"
+                className="btn btn-secondary"
                 onClick={() =>
                   (
                     document.getElementById("track") as HTMLDialogElement

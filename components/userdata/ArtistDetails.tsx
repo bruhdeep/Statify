@@ -38,7 +38,7 @@ const SpotifyArtistDetails = ({ artistId }: { artistId: string }) => {
     <div>
       <div className="flex gap-10">
         <div className="avatar">
-          <div className="w-56 rounded">
+          <div className="rounded">
             <img
               src={artistDetails.images && artistDetails.images[0]?.url}
               alt="Artist Image"

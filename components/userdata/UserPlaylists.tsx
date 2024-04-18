@@ -60,7 +60,7 @@ const PlaylistComponent: React.FC = () => {
 
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-black">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {playlists.map((playlist: any) => (
           <div key={playlist.id} className="min-w-40 p-4 rounded-lg bg-primary">
             <img
@@ -75,7 +75,9 @@ const PlaylistComponent: React.FC = () => {
             <br />
             <a href={playlist.external_urls.spotify} className="">
               <div className="flex justify-end">
-                <button className="btn w-[60%]">View on Spotify</button>
+                <button className="btn btn-secondary w-[60%]">
+                  View on Spotify
+                </button>
               </div>
             </a>
           </div>

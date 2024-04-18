@@ -53,7 +53,7 @@ const CurrentlyPlaying: React.FC = () => {
   }
 
   return (
-    <div className="text-black">
+    <div className="">
       {currentlyPlaying ? (
         <div className="flex mb-3 bg-primary rounded-lg overflow-hidden">
           <img
