@@ -3,7 +3,7 @@ import React from "react";
 
 const user = ({ params }: { params: { slug: string } }) => {
   return (
-    <div>
+    <div className="min-h-screen">
       <UserInfo userId={params.slug} />
     </div>
   );

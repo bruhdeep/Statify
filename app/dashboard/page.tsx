@@ -13,7 +13,7 @@ export default async function Dashboard() {
   if (!session) redirect("/");
 
   return (
-    <div className="h-screen lg:flex pt-5">
+    <div className="min-h-screen lg:flex pt-5">
       {/* hidden in sm */}
       <div className="hidden lg:block w-[60%] h-full">
         <div className="px-5">

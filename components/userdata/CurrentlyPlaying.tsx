@@ -65,11 +65,18 @@ const CurrentlyPlaying: React.FC = () => {
           <div className="p-3 flex items-center">
             <div>
               <p className="whitespace-nowrap overflow-hidden block text-ellipsis">
-                {currentlyPlaying.name} by{" "}
+                <a href={`/track/${currentlyPlaying.id}`}>
+                  <span className="font-bold">{currentlyPlaying.name}</span> by{" "}
+                </a>
                 <span className="font-bold">
-                  {currentlyPlaying.artists
-                    .map((artist: any) => artist.name)
-                    .join(", ")}
+                  {currentlyPlaying.artists.map(
+                    (artist: any, index: number) => (
+                      <React.Fragment key={artist.id}>
+                        <a href={`/artist/${artist.id}`}>{artist.name}</a>
+                        {index !== currentlyPlaying.artists.length - 1 && ", "}
+                      </React.Fragment>
+                    )
+                  )}
                 </span>
               </p>
               <p>Currently Playing</p>

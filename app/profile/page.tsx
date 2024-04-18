@@ -4,7 +4,7 @@ import TopGenre from "@/components/userdata/TopGenre";
 
 const page = () => {
   return (
-    <div>
+    <div className="min-h-screen">
       {/* <Userinfo /> */}
       <TopGenre />
     </div>

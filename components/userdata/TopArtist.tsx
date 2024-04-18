@@ -13,6 +13,8 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
   const { data: session } = useSession();
   const [topArtist, setTopArtist] = useState<any>(null);
   const [topArtists, setTopArtists] = useState<any[]>([]);
+  const [topgenres, setTopGenres] = useState<any[]>([]);
+  const [topGenre, setTopGenre] = useState<string>("");
 
   useEffect(() => {
     const fetchTopArtist = async () => {
@@ -28,6 +30,9 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
             }
           );
           const data = await response.json();
+          const topGenres = getTopGenres(data);
+          setTopGenres(topGenres);
+          setTopGenre(topGenres[0]);
           if (data && data.items && data.items.length > 0) {
             setTopArtist(data.items[0]);
             setTopArtists(data.items);
@@ -40,6 +45,31 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
 
     fetchTopArtist();
   }, [session, term]);
+
+  function getTopGenres(artistsData: { items: { genres: string[] }[] }) {
+    const genreCount: { [genre: string]: number } = {};
+
+    // Iterate through the artists and count the genres
+    artistsData.items.forEach((artist: { genres: string[] }) => {
+      artist.genres.forEach((genre: string) => {
+        if (genreCount[genre]) {
+          genreCount[genre]++;
+        } else {
+          genreCount[genre] = 1;
+        }
+      });
+    });
+
+    // Sort the genres by their count and return the top 5
+    const sortedGenres = Object.entries(genreCount)
+      .sort(
+        ([, countA]: [string, number], [, countB]: [string, number]) =>
+          countB - countA
+      )
+      .map(([genre]: [string, number]) => genre);
+
+    return sortedGenres;
+  }
 
   return (
     <div className="bg-primary rounded-xl text-black">
@@ -80,9 +110,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
                         <div className="artist-info pl-3 whitespace-nowrap overflow-hidden block text-ellipsis">
                           <h3>{artist.name}</h3>
                           <p>Followers: {artist.followers.total}</p>
-                          <p className="">
-                            Genres: {artist.genres.join(", ")}
-                          </p>
+                          <p className="">Genres: {artist.genres.join(", ")}</p>
                         </div>
                       </div>
                     ))}
@@ -103,6 +131,9 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
           </div>
         </div>
       )}
+      <div>
+        {topgenres.join(", ")}
+      </div>
     </div>
   );
 };

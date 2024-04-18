@@ -7,6 +7,7 @@ const ManageUsers = () => {
   const [users, setUsers] = useState([]);
   const [newUsername, setNewUsername] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     fetchUsers();
@@ -32,7 +33,7 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch("/api/searchusers?query");
+      const res = await fetch(`/api/searchusers?query=${searchTerm}`);
       if (!res.ok) {
         throw new Error("Failed to fetch user stats");
       }
@@ -47,8 +48,21 @@ const ManageUsers = () => {
     setNewUsername(e.target.value);
   };
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    fetchUsers();
+  };
+
   return (
     <div>
+      <br />
+      <input
+        type="text"
+        placeholder="Search"
+        className="input input-bordered w-full"
+        onChange={handleSearch}
+      />
+      <br />
       {users.map((user: { _id: string; username: string; email: string }) => (
         <div className="flex flex-col gap-4 mt-4" key={user._id}>
           <div className="bg-base-200 p-4 rounded-lg">

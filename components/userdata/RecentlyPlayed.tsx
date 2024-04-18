@@ -90,9 +90,16 @@ const RecentlyPlayed: React.FC = () => {
             <div className="p-3 grid items-center justify-center">
               <div className="grid">
                 <h3 className="whitespace-nowrap overflow-hidden block text-ellipsis">
-                  {track.track.name} by{" "}
+                  <a href={`/track/${track.track.id}`}>
+                    <span className="font-bold">{track.track.name}</span> by{" "}
+                  </a>
                   <span className="font-bold">
-                    {track.track.artists[0].name}
+                    {track.track.artists.map((artist: any, index: number) => (
+                      <React.Fragment key={artist.id}>
+                        <a href={`/artist/${artist.id}`}>{artist.name}</a>
+                        {index !== track.track.artists.length - 1 && ", "}
+                      </React.Fragment>
+                    ))}
                   </span>
                 </h3>
                 <div>
@@ -110,7 +117,10 @@ const RecentlyPlayed: React.FC = () => {
       ) : (
         <div className="flex justify-center">
           {limit < 50 && (
-            <button className="btn btn-primary w-full lg:w-fit" onClick={handleLoadMore}>
+            <button
+              className="btn btn-primary w-full lg:w-fit"
+              onClick={handleLoadMore}
+            >
               Load More
             </button>
           )}

@@ -302,35 +302,38 @@ const UserInfo = ({ userId }: { userId: string }) => {
             <br />
             {isViewingOwnProfile() && (
               <div>
-              {/* Open the modal using document.getElementById('ID').showModal() method */}
-              <button
-                className="btn btn-primary"
-                onClick={() =>
-                  (
-                    document.getElementById("edituser") as HTMLDialogElement
-                  ).showModal()
-                }
-              >
-                Edit Username
-              </button>
-              <dialog id="edituser" className="modal">
-                <div className="modal-box flex justify-between">
-                  <input
-                    placeholder={user.username}
-                    onChange={handleChange}
-                    type="text"
-                    className="input input-bordered w-full max-w-xs"
-                  />
-                  <button onClick={changeUsername} className="btn btn-primary">
-                    Confirm
-                  </button>
-                </div>
-                <form method="dialog" className="modal-backdrop">
-                  <button>close</button>
-                </form>
-              </dialog>
-            </div>
-            )} 
+                {/* Open the modal using document.getElementById('ID').showModal() method */}
+                <button
+                  className="btn btn-primary"
+                  onClick={() =>
+                    (
+                      document.getElementById("edituser") as HTMLDialogElement
+                    ).showModal()
+                  }
+                >
+                  Edit Username
+                </button>
+                <dialog id="edituser" className="modal">
+                  <div className="modal-box flex justify-between">
+                    <input
+                      placeholder={user.username}
+                      onChange={handleChange}
+                      type="text"
+                      className="input input-bordered w-full max-w-xs"
+                    />
+                    <button
+                      onClick={changeUsername}
+                      className="btn btn-primary"
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                  <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
+              </div>
+            )}
           </div>
         </div>
         <TopArtistsAndTracks data={topdata} />
@@ -356,7 +359,9 @@ const UserInfo = ({ userId }: { userId: string }) => {
                 <div className="grid">
                   <h3 className="whitespace-nowrap overflow-hidden block text-ellipsis">
                     {track.track_name} by{" "}
-                    <span className="font-bold">{track.artist_name}</span>
+                    <span className="font-bold">
+                      {track.artist_name.join(", ")}
+                    </span>
                   </h3>
                   <div>
                     <p>Played {getTimeAgo(track.played_at)}</p>
