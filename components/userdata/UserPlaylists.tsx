@@ -63,11 +63,21 @@ const PlaylistComponent: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {playlists.map((playlist: any) => (
           <div key={playlist.id} className="min-w-40 p-4 rounded-lg bg-primary">
-            <img
-              src={playlist.images[0]?.url}
-              alt={playlist.name}
-              className="w-full h-54 object-cover mb-4 rounded-lg"
-            />
+            {playlist.images &&
+            playlist.images.length > 0 &&
+            playlist.images[0].url ? (
+              <img
+                src={playlist.images[0].url}
+                alt={playlist.name}
+                className="w-full h-54 object-cover mb-4 rounded-lg"
+              />
+            ) : (
+              <img
+                src="/test.jpg"
+                alt="alt image"
+                className="w-full h-54 object-cover mb-4 rounded-lg"
+              />
+            )}
             <h3 className="text-xl font-semibold whitespace-nowrap overflow-hidden block text-ellipsis">
               {playlist.name}
             </h3>
