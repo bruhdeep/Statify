@@ -82,7 +82,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
               <p className="text-xl">Followers: {topArtist.followers.total}</p>
               <br />
               <button
-                className="btn btn-secondary"
+                className="btn btn-neutral"
                 onClick={() =>
                   (
                     document.getElementById("artist") as HTMLDialogElement

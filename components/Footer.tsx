@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import {
   FaDiscord,
@@ -13,7 +14,10 @@ const Footer = () => {
       <footer className="footer footer-center p-10 bg-primary text-primary-content">
         <aside>
           <p className="font-bold">
-            <span className="text-2xl">STATIFY</span> <br />
+            <span className="">
+              <img className="h-16 mx-auto" src="/logo.png" alt="Statify" />
+            </span>{" "}
+            <br />
             Unlock the Power of Personalized Music Insights
           </p>
           <p>© Copyright. All Rights Reserved</p>

@@ -55,7 +55,7 @@ const TopTrack: React.FC<TopTrackProps> = ({ term }) => {
               <p className="text-xl">Popularity: {topTrack.popularity}</p>
               <br />
               <button
-                className="btn btn-secondary"
+                className="btn btn-neutral"
                 onClick={() =>
                   (
                     document.getElementById("track") as HTMLDialogElement

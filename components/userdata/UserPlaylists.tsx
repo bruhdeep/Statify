@@ -75,7 +75,7 @@ const PlaylistComponent: React.FC = () => {
             <br />
             <a href={playlist.external_urls.spotify} className="">
               <div className="flex justify-end">
-                <button className="btn btn-secondary w-[60%]">
+                <button className="btn btn-neutral w-[60%]">
                   View on Spotify
                 </button>
               </div>

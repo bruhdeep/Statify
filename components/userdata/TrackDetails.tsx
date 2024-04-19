@@ -98,12 +98,15 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
                     className="rounded-lg"
                   />
                 </a>
-
                 <div className="mt-3">
                   <p className="font-bold text-center">{track.name}</p>
-                  <p className="text-center text-sm">
-                    {track.artists.map((artist: any) => artist.name).join(", ")}
-                  </p>
+                  <a href={`/artist/${track.artists[0].id}`}>
+                    <p className="text-center text-sm">
+                      {track.artists
+                        .map((artist: any) => artist.name)
+                        .join(", ")}
+                    </p>
+                  </a>
                 </div>
               </div>
             ))}
