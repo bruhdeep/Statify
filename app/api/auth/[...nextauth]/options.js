@@ -72,7 +72,7 @@ export const authOptions = {
         const userData = await response.json();
         const email = userData.email;
         const username = userData.display_name;
-        const imageurl = "test";
+        const imageurl = userData.images[1].url;
 
         const handleSubmit = async () => {
           // Send the POST request to your API route
