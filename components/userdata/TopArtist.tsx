@@ -101,7 +101,9 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
                       >
                         <div className="artist-image flex items-center gap-2">
                           {index + 1}
-                          {artist.images[0].url ? (
+                          {artist.images &&
+                          artist.images.length > 0 &&
+                          artist.images[0].url ? (
                             <img
                               className="min-w-20 max-w-20 rounded-lg"
                               src={artist.images[0].url}
@@ -114,11 +116,6 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
                               className="w-full h-54 object-cover mb-4 rounded-lg"
                             />
                           )}
-                          <img
-                            className="min-w-20 max-w-20 rounded-lg"
-                            src={artist.images[0].url}
-                            alt={artist.name}
-                          />
                         </div>
                         <div className="artist-info pl-3 whitespace-nowrap overflow-hidden block text-ellipsis">
                           <h3>{artist.name}</h3>
