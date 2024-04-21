@@ -73,7 +73,7 @@ const PlaylistComponent: React.FC = () => {
               />
             ) : (
               <img
-                src="/test.jpg"
+                src="https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg"
                 alt="alt image"
                 className="w-full h-54 object-cover mb-4 rounded-lg"
               />
