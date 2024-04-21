@@ -109,7 +109,6 @@ const UserInfo = ({ userId }: { userId: string }) => {
 
         const followers = await response.json();
         if (followers) {
-          console.log("followers", followers);
           setFollowers(followers.length);
         }
       } catch (error) {
@@ -117,12 +116,15 @@ const UserInfo = ({ userId }: { userId: string }) => {
       }
     };
 
-    fetchFollowers();
-    fetchIsFollowing();
+    if (user?.email) {
+      fetchFollowers();
+      fetchIsFollowing();
+      fetchRecentlyPlayed();
+      fetchPlaylists();
+      fetchTop();
+    }
+
     fetchUser();
-    fetchRecentlyPlayed();
-    fetchPlaylists();
-    fetchTop();
   }, [userId, session, user?.email]);
 
   const isViewingOwnProfile = () => {
@@ -270,6 +272,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
       await savetop();
       await saveplaylists();
       console.log("All data saved successfully!");
+      toast.success("All data saved successfully!");
     } catch (error) {
       console.error("Error saving data:", error);
     }
@@ -277,7 +280,6 @@ const UserInfo = ({ userId }: { userId: string }) => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewUsername(e.target.value);
-    console.log(newUsername);
   };
 
   return (
@@ -386,11 +388,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
         </ul>
         <div className="w-[40%]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {playlists.map((playlist: any) => (
-              <div
-                key={playlist.id}
-                className="min-w-40 p-4 rounded-lg bg-primary"
-              >
+            {playlists.map((playlist: any, index) => (
+              <div key={index} className="min-w-40 p-4 rounded-lg bg-primary">
                 <img
                   src={playlist.image_url}
                   alt={playlist.name}

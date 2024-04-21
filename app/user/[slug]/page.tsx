@@ -4,7 +4,7 @@ import React from "react";
 const user = ({ params }: { params: { slug: string } }) => {
   return (
     <div className="min-h-screen">
-      <UserInfo userId={params.slug} />
+      {params.slug && <UserInfo userId={params.slug} />}
     </div>
   );
 };

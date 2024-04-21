@@ -8,6 +8,7 @@ import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
 import ThemeToggle from "./ThemeToggle";
 import Search from "./Search";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const { data: session }: any = useSession();
@@ -16,7 +17,6 @@ const Navbar = () => {
   useEffect(() => {
     const getuserid = async () => {
       try {
-        console.log("session", session?.user?.email);
         const response = await fetch(
           `/api/getuserid?query=${session?.user?.email}`
         );
@@ -90,6 +90,7 @@ const Navbar = () => {
                 <button
                   onClick={() => {
                     signOut();
+                    toast.success("Logged out successfully");
                   }}
                 >
                   Logout
