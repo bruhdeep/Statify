@@ -113,7 +113,7 @@ const TopArtist: React.FC<TopArtistProps> = ({ term }) => {
                             <img
                               src="/test.jpg"
                               alt="alt image"
-                              className="w-full h-54 object-cover mb-4 rounded-lg"
+                              className="min-w-20 max-w-20 rounded-lg"
                             />
                           )}
                         </div>

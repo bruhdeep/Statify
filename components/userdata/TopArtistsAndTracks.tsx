@@ -71,7 +71,7 @@ const TopArtistsAndTracks = ({ data }: { data: any }) => {
             </div>
             <div className="min-w-[50%]">
               {data.short_term_top_tracks.slice(0, 1).map((track: any) => (
-                <div key={track._id} className="text-right">
+                <div key={track._id} className="text-right max-w-60">
                   <img
                     className="h-60 rounded-lg object-cover"
                     src={track.image}
@@ -110,7 +110,7 @@ const TopArtistsAndTracks = ({ data }: { data: any }) => {
             </div>
             <div className="min-w-[50%]">
               {data.medium_term_top_tracks.slice(0, 1).map((track: any) => (
-                <div key={track._id} className="text-right">
+                <div key={track._id} className="text-right max-w-60">
                   <img
                     className="h-60 rounded-lg object-cover"
                     src={track.image}
@@ -149,7 +149,7 @@ const TopArtistsAndTracks = ({ data }: { data: any }) => {
             </div>
             <div className="min-w-[50%] max-w-60">
               {data.long_term_top_tracks.slice(0, 1).map((track: any) => (
-                <div key={track._id} className="text-right">
+                <div key={track._id} className="text-right max-w-60">
                   <img
                     className="h-60 rounded-lg object-cover"
                     src={track.image}

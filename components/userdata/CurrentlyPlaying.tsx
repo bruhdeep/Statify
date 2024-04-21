@@ -34,13 +34,12 @@ const CurrentlyPlaying: React.FC = () => {
         }
       } catch (error) {
         setError("Not playing rn");
-        console.error(error);
       }
     };
 
     if (session?.accessToken) {
       fetchCurrentlyPlaying();
-      const interval = setInterval(fetchCurrentlyPlaying, 1000); // Refresh every second
+      const interval = setInterval(fetchCurrentlyPlaying, 15000); // Refresh every second
 
       return () => {
         clearInterval(interval); // Clear the interval when the component unmounts

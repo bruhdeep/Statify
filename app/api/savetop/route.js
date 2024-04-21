@@ -75,39 +75,51 @@ export async function POST(request) {
         short_term_top_artists: shortTermArtistsData.data.items.map(
           (artist) => ({
             name: artist.name,
-            image: artist.images[0].url,
+            image:
+              artist.images[0]?.url ||
+              "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg",
             popularity: artist.popularity,
           })
         ),
         short_term_top_tracks: shortTermTracksData.data.items.map((track) => ({
           name: track.name,
-          image: track.album.images[0].url,
+          image:
+            track.album.images[0]?.url ||
+            "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg",
           artists: track.artists.map((artist) => artist.name),
           popularity: track.popularity,
         })),
         medium_term_top_artists: mediumTermArtistsData.data.items.map(
           (artist) => ({
             name: artist.name,
-            image: artist.images[0].url,
+            image:
+              artist.images[0]?.url ||
+              "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg",
             popularity: artist.popularity,
           })
         ),
         medium_term_top_tracks: mediumTermTracksData.data.items.map(
           (track) => ({
             name: track.name,
-            image: track.album.images[0].url,
+            image:
+              track.album.images[0]?.url ||
+              "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg",
             artists: track.artists.map((artist) => artist.name),
             popularity: track.popularity,
           })
         ),
         long_term_top_artists: longTermArtistsData.data.items.map((artist) => ({
           name: artist.name,
-          image: artist.images[0].url,
+          image:
+            artist.images[0]?.url ||
+            "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg",
           popularity: artist.popularity,
         })),
         long_term_top_tracks: longTermTracksData.data.items.map((track) => ({
           name: track.name,
-          image: track.album.images[0].url,
+          image:
+            track.album.images[0]?.url ||
+            "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg",
           artists: track.artists.map((artist) => artist.name),
           popularity: track.popularity,
         })),

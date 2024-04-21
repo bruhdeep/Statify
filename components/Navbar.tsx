@@ -16,6 +16,7 @@ const Navbar = () => {
   useEffect(() => {
     const getuserid = async () => {
       try {
+        console.log("session", session?.user?.email);
         const response = await fetch(
           `/api/getuserid?query=${session?.user?.email}`
         );
@@ -54,7 +55,13 @@ const Navbar = () => {
           >
             {session ? (
               <div className="w-10 rounded-full">
-                <img alt="Profilepic" src={session?.user?.image} />
+                <img
+                  alt="Profilepic"
+                  src={
+                    session?.user?.image ||
+                    "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg"
+                  }
+                />
               </div>
             ) : (
               <div className="w-10 rounded-full">

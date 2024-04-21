@@ -73,8 +73,8 @@ export const authOptions = {
         const email = userData.email;
         const username = userData.display_name;
         const imageurl =
+          (userData.images && userData.images[0] && userData.images[0].url) ||
           "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg";
-
         const handleSubmit = async () => {
           // Send the POST request to your API route
           await fetch(process.env.NEXTAUTH_URL + "/api/saveuserdata", {
