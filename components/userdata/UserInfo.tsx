@@ -17,6 +17,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
   const [followers, setFollowers] = useState(0);
   const [topdata, setTopData] = useState<any[]>([]);
   const [newUsername, setNewUsername] = useState("");
+  const [playlists, setPlaylists] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -47,6 +48,23 @@ const UserInfo = ({ userId }: { userId: string }) => {
       } catch (error) {
         setError("Error fetching recently played tracks");
         console.error(error);
+      }
+    };
+
+    const fetchPlaylists = async () => {
+      try {
+        const response = await fetch(
+          `/api/getplaylists?userEmail=${user?.email}`
+        );
+
+        if (response.ok) {
+          const playlists = await response.json();
+          setPlaylists(playlists);
+        } else {
+          throw new Error("Unable to fetch playlists");
+        }
+      } catch (error) {
+        console.error("Error fetching playlists:", error);
       }
     };
 
@@ -103,13 +121,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
     fetchIsFollowing();
     fetchUser();
     fetchRecentlyPlayed();
+    fetchPlaylists();
     fetchTop();
-
-    const interval = setInterval(fetchRecentlyPlayed, 5000); // Refresh every 10 seconds
-
-    return () => {
-      clearInterval(interval); // Clear the interval when the component unmounts
-    };
   }, [userId, session, user?.email]);
 
   const isViewingOwnProfile = () => {
@@ -341,8 +354,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
       <br />
       <p className="font-bold text-xl">Recently Played</p>
       <br />
-      <div>
-        <ul className="text-black">
+      <div className="flex gap-5">
+        <ul className="text-black w-[60%]">
           <p>{error}</p>
           {trackdata.map((track: any, index: number) => (
             <li
@@ -371,6 +384,34 @@ const UserInfo = ({ userId }: { userId: string }) => {
             </li>
           ))}
         </ul>
+        <div className="w-[40%]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {playlists.map((playlist: any) => (
+              <div
+                key={playlist.id}
+                className="min-w-40 p-4 rounded-lg bg-primary"
+              >
+                <img
+                  src={playlist.image_url}
+                  alt={playlist.name}
+                  className="w-full h-54 object-cover mb-4 rounded-lg"
+                />
+                <h3 className="text-xl font-semibold whitespace-nowrap overflow-hidden block text-ellipsis">
+                  {playlist.name}
+                </h3>
+                <p className="text-sm">{`${playlist.tracks_total} tracks`}</p>
+                <br />
+                <a href={playlist.external_urls} className="">
+                  <div className="flex justify-end">
+                    <button className="btn btn-neutral w-[60%]">
+                      View on Spotify
+                    </button>
+                  </div>
+                </a>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -90,7 +90,7 @@ const SpotifyArtistDetails = ({ artistId }: { artistId: string }) => {
                 <img
                   src={artist.images[0]?.url}
                   alt="Related Artist Image"
-                  className="rounded-lg"
+                  className="rounded-lg h-80 w-80 object-cover"
                 />
               </a>
               <div className="mt-3">
