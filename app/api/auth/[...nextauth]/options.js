@@ -72,7 +72,8 @@ export const authOptions = {
         const userData = await response.json();
         const email = userData.email;
         const username = userData.display_name;
-        const imageurl = userData.images[1].url;
+        const imageurl =
+          "https://miro.medium.com/v2/resize:fit:698/1*0jjdu52m0MO4SjLWiCVOlg.jpeg";
 
         const handleSubmit = async () => {
           // Send the POST request to your API route
