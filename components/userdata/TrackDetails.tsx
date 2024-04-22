@@ -62,7 +62,7 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
 
   return (
     <div>
-      <div className="flex gap-10">
+      <div className="lg:flex gap-10">
         <div className="avatar">
           <div className="rounded">
             <img
@@ -87,7 +87,7 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
       <div>
         <h2 className="font-bold text-2xl mt-5">Recommended Tracks:</h2>
         <br />
-        <div className="grid grid-cols-5 gap-5">
+        <div className="lg:grid grid-cols-5 gap-5">
           {recommendations &&
             recommendations.map((track: any, index: number) => (
               <div key={index} className="card rounded shadow-lg">
@@ -95,7 +95,7 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
                   <img
                     src={track.album.images[0]?.url}
                     alt="Track Image"
-                    className="rounded-lg"
+                    className="rounded-lg h-40 lg:h-80 w-full object-cover"
                   />
                 </a>
                 <div className="mt-3">
@@ -107,7 +107,8 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
                         .join(", ")}
                     </p>
                   </a>
-                </div>
+                </div>{" "}
+                <br />
               </div>
             ))}
         </div>

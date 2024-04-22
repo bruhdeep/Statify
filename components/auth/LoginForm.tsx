@@ -66,11 +66,11 @@ const Login = () => {
             >
               Sign In With Spotify
             </button>
-            <div className="text-right pt-5">
+            {/* <div className="text-right pt-5">
               <p>Use this account for testing</p>
               <p>statifytesting@test.com</p>
               <p>Testing123</p>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="hidden lg:block w-[40%] bg-slate-400 m-3 rounded-xl overflow-hidden">

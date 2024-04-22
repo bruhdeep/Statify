@@ -356,8 +356,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
       <br />
       <p className="font-bold text-xl">Recently Played</p>
       <br />
-      <div className="flex gap-5">
-        <ul className="text-black w-[60%]">
+      <div className="lg:flex gap-5">
+        <ul className="text-black lg:w-[60%]">
           <p>{error}</p>
           {trackdata.map((track: any, index: number) => (
             <li
@@ -386,7 +386,8 @@ const UserInfo = ({ userId }: { userId: string }) => {
             </li>
           ))}
         </ul>
-        <div className="w-[40%]">
+        <div className="lg:w-[40%]">
+          <h1 className="text-2xl font-bold lg:hidden">Playlists</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {playlists.map((playlist: any, index) => (
               <div key={index} className="min-w-40 p-4 rounded-lg bg-primary">

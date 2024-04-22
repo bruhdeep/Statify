@@ -58,13 +58,12 @@ const SpotifyArtistDetails = ({ artistId }: { artistId: string }) => {
 
   return (
     <div>
-      <div className="flex gap-10">
+      <div className="lg:flex gap-10">
         <div className="avatar">
-          <div className="">
+          <div className="rounded">
             <img
               src={artistDetails.images && artistDetails.images[0]?.url}
               alt="Artist Image"
-              className=" object-fill rounded-lg"
             />
           </div>
         </div>
@@ -83,14 +82,14 @@ const SpotifyArtistDetails = ({ artistId }: { artistId: string }) => {
       <div>
         <h2 className="font-bold text-2xl mt-5">Related Artists:</h2>
         <br />
-        <div className="grid grid-cols-5 gap-5">
+        <div className="lg:grid grid-cols-5 gap-5">
           {relatedArtists.slice(0, 5).map((artist, index) => (
             <div key={index} className="card rounded shadow-lg">
               <a href={`/artist/${artist.id}`}>
                 <img
                   src={artist.images[0]?.url}
                   alt="Related Artist Image"
-                  className="rounded-lg h-80 w-80 object-cover"
+                  className="rounded-lg h-40 lg:h-80 w-full object-cover"
                 />
               </a>
               <div className="mt-3">

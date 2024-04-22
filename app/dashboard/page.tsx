@@ -29,6 +29,7 @@ export default async function Dashboard() {
         {/* hidden in lg */}
         <div className="lg:hidden">
           <div className="">
+            <TermSelect />
             <br />
             <div className="flex items-center justify-between">
               <p className="text-xl font-bold">Recent</p>
@@ -38,7 +39,9 @@ export default async function Dashboard() {
             <RecentlyPlayed />
           </div>
         </div>
-        <TermSelect />
+        <div className="hidden lg:block">
+          <TermSelect />
+        </div>
         <br />
         <p className="text-xl font-bold">Playlists</p>
         <br />
