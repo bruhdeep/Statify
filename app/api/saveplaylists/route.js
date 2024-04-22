@@ -33,7 +33,7 @@ export async function POST(request) {
 
     await connect();
 
-    const userexists = await User.findOne({ userEmail });
+    const userexists = await User.findOne({ email: userEmail });
 
     if (!userexists) {
       return new Response(JSON.stringify({ error: "User not found" }), {

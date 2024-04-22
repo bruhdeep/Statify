@@ -29,7 +29,7 @@ export async function GET(request) {
 
     const user = await Follow.find({ followerId: query });
 
-    const userexist = await User.findOne({ query });
+    const userexist = await User.findOne({email: query });
 
     if (!userexist) {
       console.log("User not found");

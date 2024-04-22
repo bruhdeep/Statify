@@ -16,7 +16,7 @@ export async function GET(request) {
       user_email: query,
     });
 
-    const userexists = await User.findOne({ query });
+    const userexists = await User.findOne({email: query });
 
     if (!userexists) {
       return new Response(JSON.stringify({ error: "User not found" }), {

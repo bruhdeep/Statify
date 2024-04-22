@@ -14,7 +14,7 @@ export async function GET(request) {
     );
     const userEmail = searchParams.get("userEmail");
 
-    const userexists = await User.findOne({ userEmail });
+    const userexists = await User.findOne({email: userEmail });
 
     if (!userexists) {
       return new Response(JSON.stringify({ error: "User not found" }), {

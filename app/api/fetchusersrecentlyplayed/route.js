@@ -21,7 +21,7 @@ export async function GET(request) {
       .sort({ played_at: -1 })
       .limit(15);
 
-    const userexists = await User.findOne({ query });
+    const userexists = await User.findOne({email: query });
 
     if (!userexists) {
       return new Response(JSON.stringify({ error: "User not found" }), {

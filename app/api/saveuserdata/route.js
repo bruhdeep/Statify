@@ -8,7 +8,7 @@ export async function POST(request) {
     // Connect to MongoDB
     await connect();
 
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ email: email });
 
     if (existingUser) {
       console.log("User already exists in MongoDB:", email);
