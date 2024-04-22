@@ -393,7 +393,7 @@ const UserInfo = ({ userId }: { userId: string }) => {
                 <img
                   src={playlist.image_url}
                   alt={playlist.name}
-                  className="w-full h-54 object-cover mb-4 rounded-lg"
+                  className="w-full h-48 object-cover mb-4 rounded-lg"
                 />
                 <h3 className="text-xl font-semibold whitespace-nowrap overflow-hidden block text-ellipsis">
                   {playlist.name}
