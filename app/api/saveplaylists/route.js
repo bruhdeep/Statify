@@ -1,6 +1,7 @@
 import axios from "axios";
 import Playlist from "@/models/Playlist"; // Assuming you have a Playlist model in your MongoDB database
 import connect from "@/utils/db";
+import User from "@/models/User";
 
 export async function POST(request) {
   const { accessToken, userEmail } = await request.json();
@@ -31,6 +32,17 @@ export async function POST(request) {
     }));
 
     await connect();
+
+    const userexists = await User.findOne({ userEmail });
+
+    if (!userexists) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
 
     for (const playlistData of playlistsToSave) {
       const duplicate = await Playlist.findOne({

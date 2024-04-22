@@ -1,5 +1,6 @@
 import TopArtistAndTrack from "@/models/Top";
 import connect from "@/utils/db";
+import User from "@/models/User";
 
 export async function GET(request) {
   const { searchParams } = new URL(
@@ -15,6 +16,16 @@ export async function GET(request) {
       user_email: query,
     });
 
+    const userexists = await User.findOne({ query });
+
+    if (!userexists) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
     if (!topArtistAndTrack) {
       return new Response(
         JSON.stringify("No top artists and tracks found for the user."),

@@ -1,5 +1,6 @@
 import Recentlyplayed from "@/models/Recentlyplayed";
 import connect from "@/utils/db";
+import User from "@/models/User";
 
 export async function GET(request) {
   try {
@@ -20,7 +21,9 @@ export async function GET(request) {
       .sort({ played_at: -1 })
       .limit(15);
 
-    if (!track) {
+    const userexists = await User.findOne({ query });
+
+    if (!userexists) {
       return new Response(JSON.stringify({ error: "User not found" }), {
         status: 404,
         headers: {

@@ -1,5 +1,6 @@
 import connect from "@/utils/db";
 import Follow from "@/models/Follow";
+import User from "@/models/User";
 
 export async function GET(request) {
   try {
@@ -28,7 +29,10 @@ export async function GET(request) {
 
     const user = await Follow.find({ followerId: query });
 
-    if (!user) {
+    const userexist = await User.findOne({ query });
+
+    if (!userexist) {
+      console.log("User not found");
       return new Response(JSON.stringify({ error: "User not found" }), {
         status: 404,
         headers: {

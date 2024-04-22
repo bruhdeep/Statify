@@ -19,6 +19,15 @@ export async function GET(request) {
       // Add more fields to search if needed
     );
 
+    if (!users) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
     // Return the search results
     return new Response(JSON.stringify({ userid: users?._id }), {
       headers: {

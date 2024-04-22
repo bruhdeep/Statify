@@ -1,5 +1,6 @@
 import connect from "@/utils/db";
 import Follow from "@/models/Follow";
+import User from "@/models/User";
 
 export async function GET(request) {
   const { searchParams } = new URL(
@@ -15,6 +16,18 @@ export async function GET(request) {
 
     // Check if the user is already following the other user
     const follow = await Follow.findOne({ followerId, followeeId });
+
+    const followerexist = await User.findOne({ followerId });
+    const followeeexist = await User.findOne({ followeeId });
+
+    if (!followerexist || !followeeexist) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
 
     if (follow) {
       return new Response(JSON.stringify({ isFollowing: true }), {

@@ -1,6 +1,7 @@
 import axios from "axios";
 import RecentlyPlayed from "@/models/Recentlyplayed";
 import connect from "@/utils/db";
+import User from "@/models/User";
 
 export async function POST(request) {
   const { accessToken, userEmail } = await request.json();
@@ -24,6 +25,18 @@ export async function POST(request) {
 
     // Save each track to MongoDB
     await connect();
+
+    const userexists = await User.findOne({ email: userEmail });
+
+    if (!userexists) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
+
     for (const trackData of tracksToSave) {
       const duplicate = await RecentlyPlayed.findOne({
         user_email: trackData.user_email,

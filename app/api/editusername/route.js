@@ -33,11 +33,14 @@ export async function PUT(request) {
     await user.save();
 
     // Return the updated user data
-    return new Response(JSON.stringify(user), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    return new Response(
+      JSON.stringify({ message: "Username updated", username: user.username }),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
   } catch (error) {
     console.error(error);
     return new Response(JSON.stringify({ error: "Internal server error" }), {

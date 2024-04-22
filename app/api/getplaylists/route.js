@@ -1,5 +1,6 @@
 import Playlist from "@/models/Playlist"; // Assuming you have a Playlist model in your MongoDB database
 import connect from "@/utils/db";
+import User from "@/models/User";
 
 export async function GET(request) {
   try {
@@ -12,6 +13,17 @@ export async function GET(request) {
       `http://${request.headers.get("host")}`
     );
     const userEmail = searchParams.get("userEmail");
+
+    const userexists = await User.findOne({ userEmail });
+
+    if (!userexists) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    }
 
     // Find the user's playlists in MongoDB
     const playlists = await Playlist.find({ user_email: userEmail })

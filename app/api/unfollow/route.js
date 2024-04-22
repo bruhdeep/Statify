@@ -1,5 +1,6 @@
-import connect from "@/utils/db"; // Adjust your import path as needed
-import Follow from "@/models/Follow"; // Adjust your import path as needed
+import connect from "@/utils/db";
+import Follow from "@/models/Follow";
+import User from "@/models/User";
 
 export async function POST(request) {
   const { followerId, followeeId } = await request.json();
@@ -10,6 +11,21 @@ export async function POST(request) {
 
     // Check if the user is already following the other user
     const follow = await Follow.findOne({ followerId, followeeId });
+
+    const validFollower = await User.findOne({ email: followerId });
+    const validFollowee = await User.findOne({ email: followeeId });
+
+    if (!validFollower || !validFollowee) {
+      return new Response(
+        JSON.stringify({ error: "You can't unfollow someone who doesn't exist" }),
+        {
+          status: 400,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    }
 
     if (!follow) {
       // If the user is not following the other user, return a 404 response
