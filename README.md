@@ -1,6 +1,6 @@
-
-![Logo](https://i.ibb.co/41FKv0m/image.png)
-# Statify
+<div align = "center">
+   <img src="https://i.ibb.co/41FKv0m/image.png" border="0" width="">
+</div>
 
 Statify is a music analytics platform offering personalized insights into users' listening habits and fostering a social community around music discovery and engagement. Created using NextJS, DaisyUI, TailwindCSS and MongoDB
 
