@@ -49,7 +49,14 @@ To run this project, you will need to add the following environment variables to
 `SPOTIFY_SECRET`
 
 `SPOTIFY_CLIENT_ID`
-## This app leverages on the Spotify API to function
+## Documentations
 
-[Spotify API Documentaion](https://developer.spotify.com/documentation/web-api)
+[NextJS](https://nextjs.org/docs)
+
+[Spotify API](https://developer.spotify.com/documentation/web-api)
+
+[Daisy UI](https://daisyui.com/docs/install/)
+
+[TailwindCSS](https://tailwindcss.com/docs/installation)
+
 
