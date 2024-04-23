@@ -4,6 +4,11 @@
 
 Statify is a music analytics platform offering personalized insights into users' listening habits and fostering a social community around music discovery and engagement. Created using NextJS, DaisyUI, TailwindCSS and MongoDB
 
+A Spotify account is required to access the site. The spotify email should be added to developer console so contact me on any socials in my profile to request access.
+
+## Live Site
+
+<a href ="https://statify.bruhdeep.me">Click here to access<a/>
 
 ## Run Locally
 
