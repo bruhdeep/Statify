@@ -1,4 +1,4 @@
-import Playlist from "@/models/Playlist"; // Assuming you have a Playlist model in your MongoDB database
+import Playlist from "@/models/Playlist";
 import connect from "@/utils/db";
 import User from "@/models/User";
 

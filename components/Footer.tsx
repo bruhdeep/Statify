@@ -11,8 +11,10 @@ import {
 const Footer = () => {
   return (
     <div className="">
+      {/* Footer section */}
       <footer className="footer footer-center p-10 bg-primary text-primary-content">
         <aside>
+          {/* Logo and tagline */}
           <p className="font-bold">
             <span className="">
               <img className="h-16 mx-auto" src="/logo.png" alt="Statify" />
@@ -26,6 +28,7 @@ const Footer = () => {
           </p>
         </aside>
         <nav>
+          {/* Social media links */}
           <div className="grid grid-flow-col gap-4">
             <a href="https://github.com/bruhdeep">
               <FaGithub size={25} />

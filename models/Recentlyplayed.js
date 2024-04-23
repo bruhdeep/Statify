@@ -13,7 +13,7 @@ const recentlyPlayedSchema = new Schema(
       required: true,
     },
     artist_name: {
-      type: [String], // Array of strings, since a track can have multiple artists
+      type: [String],
       required: true,
     },
     played_at: {
