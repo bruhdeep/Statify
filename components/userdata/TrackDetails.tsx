@@ -3,6 +3,7 @@
 
 import { useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
   const { data: session } = useSession();
@@ -82,6 +83,10 @@ const SpotifyTrackDetails = ({ trackId }: { trackId: string }) => {
           </p>
           <p>Album: {trackDetails.album && trackDetails.album.name}</p>
           <p>Duration: {msToMinSec(trackDetails.duration_ms)}</p>
+          <br />
+          <Link href={trackDetails.external_urls.spotify}>
+            <button className="btn btn-primary">Open in spotify</button>
+          </Link>
         </div>
       </div>
       <div>

@@ -1,8 +1,7 @@
 import React from "react";
-import RecentlyPlayed from "@/components/userdata/RecentlyPlayed";
-import CurrentlyPlaying from "@/components/userdata/CurrentlyPlaying";
 import UserPlaylists from "@/components/userdata/UserPlaylists";
 import TermSelect from "@/components/TermSelect";
+import DashboardSelector from "@/components/DashboardSelector";
 
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -17,11 +16,7 @@ export default async function Dashboard() {
       {/* hidden in sm */}
       <div className="hidden lg:block w-[60%] h-full">
         <div className="px-5">
-          <div className="flex items-center justify-between">
-            <p className="text-xl font-bold py-3">Recent</p>
-          </div>
-          <CurrentlyPlaying />
-          <RecentlyPlayed />
+          <DashboardSelector />
         </div>
       </div>
 
@@ -29,13 +24,7 @@ export default async function Dashboard() {
         {/* hidden in lg */}
         <div className="lg:hidden">
           <div className="">
-            <br />
-            <div className="flex items-center justify-between">
-              <p className="text-xl font-bold">Recent</p>
-            </div>
-            <br />
-            <CurrentlyPlaying />
-            <RecentlyPlayed />
+            <DashboardSelector />
           </div>
         </div>
         <div className=" lg:block">

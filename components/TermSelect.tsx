@@ -41,7 +41,7 @@ const TermSelect = () => {
             </a>
           </li>
         </ul>
-      </div>
+      </div> 
 
       <div className="text-xl font-bold">
         <div className="flex items-center justify-between"></div>

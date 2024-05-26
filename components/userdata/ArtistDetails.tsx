@@ -3,6 +3,7 @@
 
 import { useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 const SpotifyArtistDetails = ({ artistId }: { artistId: string }) => {
   const { data: session } = useSession();
@@ -77,6 +78,9 @@ const SpotifyArtistDetails = ({ artistId }: { artistId: string }) => {
             Followers:{" "}
             {artistDetails.followers && artistDetails.followers.total}
           </p>
+          <Link href={artistDetails.external_urls.spotify}>
+            <button className="btn btn-primary">Open in spotify</button>
+          </Link>
         </div>
       </div>
       <div>

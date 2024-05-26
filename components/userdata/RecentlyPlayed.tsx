@@ -9,7 +9,7 @@ const RecentlyPlayed: React.FC = () => {
   const { data: session } = useSession();
   const [recentlyPlayed, setRecentlyPlayed] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [limit, setLimit] = useState<number>(10); // Number of tracks to fetch
+  const [limit, setLimit] = useState<number>(10); // yo change garne initial load ko limit ko lagi
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {

@@ -16,25 +16,27 @@ const Navbar = () => {
 
   useEffect(() => {
     const getuserid = async () => {
-      try {
-        const response = await fetch(
-          `/api/getuserid?query=${session?.user?.email}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch user");
+      if (session && session?.user?.email) {
+        try {
+          const response = await fetch(
+            `/api/getuserid?query=${session?.user?.email}`
+          );
+          if (!response.ok) {
+            throw new Error("Failed to fetch user");
+          }
+          const { userid } = await response.json();
+          //to fix the undefined userid if rendered before session initialized
+          if (userid) {
+            setUserid(userid);
+          }
+        } catch (error) {
+          console.error("Error fetching user:", error);
         }
-        const { userid } = await response.json();
-        //to fix the undefined userid if rendered before session initialized
-        if (userid) {
-          setUserid(userid);
-        }
-      } catch (error) {
-        console.error("Error fetching user:", error);
       }
     };
 
     getuserid();
-  }, [session?.user?.email]);
+  }, [session]);
 
   return (
     <div className="">

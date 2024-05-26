@@ -58,6 +58,11 @@ const Search = () => {
     handletrackSearch();
     handleuserSearch();
   };
+
+  const handleClose = () => {
+    (document.getElementById("searchmodal") as HTMLDialogElement).close();
+  };
+
   return (
     <div>
       {/* modal test */}
@@ -97,6 +102,7 @@ const Search = () => {
                           <a
                             href={`/track/${track.id}`}
                             className="text-primary hover:underline"
+                            onClick={handleClose}
                           >
                             {track.name}
                           </a>{" "}
@@ -106,6 +112,7 @@ const Search = () => {
                               <a
                                 href={`/artist/${artist.id}`}
                                 className="text-primary hover:underline"
+                                onClick={handleClose}
                               >
                                 {artist.name}
                               </a>
@@ -131,7 +138,11 @@ const Search = () => {
                           _id: string;
                           username: string;
                         }) => (
-                          <Link href={`/user/${user._id}`} key={user._id}>
+                          <Link
+                            onClick={handleClose}
+                            href={`/user/${user._id}`}
+                            key={user._id}
+                          >
                             <li className="py-3 px-2 border border-slate-500 bg-black text-slate-400 rounded-lg flex gap-2">
                               <div className="rounded-2xl overflow-hidden">
                                 <img
