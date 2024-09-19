@@ -8,7 +8,7 @@ A Spotify account is required to access the site. The spotify email should be ad
 
 ## Live Site
 
-<a href ="https://statify.bruhdeep.me">Click here to access<a/>
+<a href ="https://statify.bruhdeep.site">Click here to access<a/>
 
 ## Run Locally
 
